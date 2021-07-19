@@ -26,3 +26,11 @@ function cardBuilder(card) {
     return `<div class="card" data-card-id="${card.id}">${card.title}</div>`;
 }
 
+
+export function newBoardInput () {
+    return `<input type="text" placeholder="Enter new board name" id="new-table-name" required><button id="submit-new-board-title">Submit</button>`
+}
+
+export function newBoardButton () {
+    return `<button type="button" id="load-new-table-form">Create new table</button>`
+}

@@ -1,16 +1,19 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, request, jsonify
 from util import json_response
 
-import queires
+import queries
 
 app = Flask(__name__)
 
 
-@app.route("/")
+@app.route("/", methods=['GET', 'POST'])
 def index():
     """
     This is a one-pager which shows all the boards and cards
     """
+    if request.method == 'POST':
+        board_name = request.data.decode('utf-8')
+        queries.create_new_board(board_name)
     return render_template('index.html')
 
 
@@ -20,7 +23,7 @@ def get_boards():
     """
     All the boards
     """
-    return queires.get_boards()
+    return queries.get_boards()
 
 
 @app.route("/get-cards/<int:board_id>")
@@ -30,7 +33,7 @@ def get_cards_for_board(board_id: int):
     All cards that belongs to a board
     :param board_id: id of the parent board
     """
-    return queires.get_cards_for_board(board_id)
+    return queries.get_cards_for_board(board_id)
 
 
 def main():

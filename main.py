@@ -1,7 +1,7 @@
 from flask import Flask, render_template, url_for
 from util import json_response
 
-import queires
+import queries
 
 app = Flask(__name__)
 
@@ -20,7 +20,7 @@ def get_boards():
     """
     All the boards
     """
-    return queires.get_boards()
+    return queries.get_boards()
 
 
 @app.route("/get-cards/<int:board_id>")
@@ -30,7 +30,7 @@ def get_cards_for_board(board_id: int):
     All cards that belongs to a board
     :param board_id: id of the parent board
     """
-    return queires.get_cards_for_board(board_id)
+    return queries.get_cards_for_board(board_id)
 
 
 def main():

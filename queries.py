@@ -50,3 +50,12 @@ def create_new_board(board_name):
         VALUES(%(board_name)s)
         """
         , {"board_name": board_name}, select=False)
+
+
+def update_board_name(old_name, new_name):
+    query = """UPDATE boards
+               SET title = %{new_name}s
+               WHERE title = %{old_name}"""
+    data_manager.execute_select(query,
+                                variables={"old_name": old_name, "new_name": new_name},
+                                select=False)

@@ -14,11 +14,16 @@ def index():
     return render_template('index.html')
 
 
-@app.route("/boards", methods=['POST'])
+@app.route("/boards", methods=['POST', 'PATCH'])
 def boards():
     if request.method == 'POST':
         board_name = request.get_json()["board_title"]
         queries.create_new_board(board_name)
+    elif request.method == 'PATCH':
+        request_json = request.get_json()
+        old_board_name = request_json["old_name"]
+        new_board_name = request_json["new_name"]
+        queries.update_board_name(old_board_name, new_board_name)
     return redirect('/')
 
 

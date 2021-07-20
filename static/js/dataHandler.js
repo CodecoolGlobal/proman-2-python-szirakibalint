@@ -23,6 +23,10 @@ export let dataHandler = {
         const payload = {"board_title": boardTitle}
         await apiPost('/boards', payload)
     },
+    changeBoardTitle: async function (boardID, newBoardTitle) {
+        const payload = {"board_id": boardID, "new_title": newBoardTitle}
+        await apiPut('/boards', payload)
+    },
     createNewCard: async function (cardTitle, boardId, statusId) {
         // creates new card, saves it and calls the callback function with its data
     }
@@ -41,8 +45,8 @@ async function apiGet(url) {
 async function apiPost(url, payload) {
     await fetch(url, {
         headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'},
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'},
         method: 'POST',
         body: JSON.stringify(payload)
     })
@@ -51,5 +55,12 @@ async function apiPost(url, payload) {
 async function apiDelete(url) {
 }
 
-async function apiPut(url) {
+async function apiPut(url, payload) {
+    await fetch(url, {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'},
+        method: 'PUT',
+        body: JSON.stringify(payload)
+})
 }

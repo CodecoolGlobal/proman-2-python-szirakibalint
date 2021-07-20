@@ -28,7 +28,7 @@ function cardBuilder(card) {
 
 
 export function newBoardInput () {
-    return `<input type="text" placeholder="Enter new board name" id="new-table-name" required><button id="submit-new-board-title">Submit</button>`
+    return `<input type="text" placeholder="Enter new board name" id="new-board-name" required autofocus autocomplete="off"><button id="submit-new-board-title">Save</button>`
 }
 
 export function newBoardButton () {

@@ -49,4 +49,4 @@ def create_new_board(board_name):
         INSERT INTO boards(title)
         VALUES(%(board_name)s)
         """
-        , {"board_name": board_name})
+        , {"board_name": board_name}, select=False)

@@ -1,7 +1,7 @@
 import * as htmlFactory from "./htmlFactory.js";
 import {domManager} from "./domManager.js";
 import {dataHandler} from "./dataHandler.js";
-
+import { reset } from "./main.js";
 
 export function initNewBoardDiv () {
     domManager.addChild("#root", `<div id="new-board-form"></div>`)
@@ -18,7 +18,7 @@ export function initNewBoardButton () {
         domManager.addEventListener('#submit-new-board-title', 'click', async () => {
             const boardTitle = document.querySelector('#new-board-name').value
             await dataHandler.createNewBoard(boardTitle)
-            initNewBoardButton()
+            reset()
         })
     })
 }
@@ -29,7 +29,6 @@ export function initRenameButton (boardId, renameButton) {
     domManager.addEventListener(`#submit-new-board-title-${boardId}`, 'click', async () => {
         const newBoardTitle = document.querySelector(`#new-board-name-${boardId}`).value
         await dataHandler.changeBoardTitle(boardId, newBoardTitle)
-        renameDiv.innerHTML = ''
-        renameDiv.appendChild(renameButton)
+        reset()
     })
 }

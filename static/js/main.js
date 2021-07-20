@@ -7,4 +7,10 @@ function init() {
   boardsManager.loadBoards()
 }
 
+export function reset () {
+  const root = document.querySelector('#root')
+  root.innerHTML = ''
+  init()
+}
+
 init();

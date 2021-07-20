@@ -26,11 +26,10 @@ function cardBuilder(card) {
     return `<div class="card" data-card-id="${card.id}">${card.title}</div>`;
 }
 
-
 export function newBoardInput () {
     return `<input type="text" placeholder="Enter new board name" id="new-board-name" required autofocus autocomplete="off"><button id="submit-new-board-title">Save</button>`
 }
 
 export function newBoardButton () {
-    return `<button type="button" id="load-new-table-form">Create new table</button>`
+    return `<button type="button" id="load-new-board-form">Create new board</button>`
 }

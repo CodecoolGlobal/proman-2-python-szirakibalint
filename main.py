@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request, jsonify
+from flask import Flask, render_template, url_for, request, jsonify, redirect
 from util import json_response
 
 import queries
@@ -11,10 +11,15 @@ def index():
     """
     This is a one-pager which shows all the boards and cards
     """
-    if request.method == 'POST':
-        board_name = request.data.decode('utf-8')
-        queries.create_new_board(board_name)
     return render_template('index.html')
+
+
+@app.route("/boards", methods=['POST'])
+def boards():
+    if request.method == 'POST':
+        board_name = request.get_json()["board_title"]
+        queries.create_new_board(board_name)
+    return redirect('/')
 
 
 @app.route("/get-boards")

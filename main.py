@@ -6,7 +6,7 @@ import queries
 app = Flask(__name__)
 
 
-@app.route("/", methods=['GET', 'POST'])
+@app.route("/", methods=['GET', 'POST', 'PUT'])
 def index():
     """
     This is a one-pager which shows all the boards and cards
@@ -14,16 +14,16 @@ def index():
     return render_template('index.html')
 
 
-@app.route("/boards", methods=['POST', 'PATCH'])
+@app.route("/boards", methods=['POST', 'PUT'])
 def boards():
     if request.method == 'POST':
         board_name = request.get_json()["board_title"]
         queries.create_new_board(board_name)
-    elif request.method == 'PATCH':
+    elif request.method == 'PUT':
         request_json = request.get_json()
-        old_board_name = request_json["old_name"]
-        new_board_name = request_json["new_name"]
-        queries.update_board_name(old_board_name, new_board_name)
+        board_id = request_json["board_id"]
+        new_board_name = request_json["new_title"]
+        queries.update_board_name(board_id, new_board_name)
     return redirect('/')
 
 

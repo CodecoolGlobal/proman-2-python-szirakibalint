@@ -52,10 +52,10 @@ def create_new_board(board_name):
         , {"board_name": board_name}, select=False)
 
 
-def update_board_name(old_name, new_name):
+def update_board_name(board_id, new_name):
     query = """UPDATE boards
-               SET title = %{new_name}s
-               WHERE title = %{old_name}"""
+               SET title = %(new_name)s
+               WHERE id = %(board_id)s"""
     data_manager.execute_select(query,
-                                variables={"old_name": old_name, "new_name": new_name},
+                                variables={"board_id": board_id, "new_name": new_name},
                                 select=False)

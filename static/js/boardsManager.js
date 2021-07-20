@@ -24,6 +24,7 @@ function showHideButtonHandler(clickEvent) {
 }
 
 function renameTable(clickEvent) {
-    const boardId =clickEvent.target.dataset.boardId
-    initRenameButton(boardId)
+    const boardId = clickEvent.target.dataset.boardId
+    const renameButton = clickEvent.target
+    initRenameButton(boardId, renameButton)
 }

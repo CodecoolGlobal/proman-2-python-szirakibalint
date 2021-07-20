@@ -6,6 +6,15 @@ import { initRenameButton } from "./uiManager.js";
 
 
 export let boardsManager = {
+    loadColumns: async function (boardId) {
+        const columns = await dataHandler.getStatuses(boardId);
+        for (let column of columns) {
+            console.log(column);
+            const columnBuilder = htmlFactory(htmlTemplates.column) ;
+            const content = columnBuilder(column) ;
+            domManager.addChild(`.board[data-board-id="${boardId}"]`, content);
+        }
+    },
     loadBoards: async function () {
         const boards = await dataHandler.getBoards();
         for (let board of boards) {
@@ -14,6 +23,7 @@ export let boardsManager = {
             domManager.addChild("#root", content)
             domManager.addEventListener(`.toggle-board-button[data-board-id="${board.id}"]`, "click", showHideButtonHandler)
             domManager.addEventListener(`.change-board-name[data-board-id="${board.id}"]`, "click", renameTable)
+            this.loadColumns(board.id)
         }
     },
 }

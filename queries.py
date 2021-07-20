@@ -43,6 +43,19 @@ def get_cards_for_board(board_id):
     return matching_cards
 
 
+def get_statuses_for_board(board_id):
+    matching_statuses = data_manager.execute_select(
+        """
+        SELECT * FROM boards_statuses
+        LEFT JOIN statuses ON boards_statuses.status_id = statuses.id
+        WHERE boards_statuses.board_id = %(board_id)s
+        ;
+        """
+        , {"board_id": board_id})
+
+    return matching_statuses
+
+
 def create_new_board(board_name):
     data_manager.execute_select(
         """
@@ -50,6 +63,14 @@ def create_new_board(board_name):
         VALUES(%(board_name)s)
         """
         , {"board_name": board_name}, select=False)
+    for i in range(1, 5):
+        data_manager.execute_select(
+            """
+            INSERT INTO boards_statuses
+            VALUES((SELECT MAX(id) from boards ), %(status)s )
+            """
+            , {"status": i}, select=False)
+
 
     
 def update_board_name(board_id, new_name):

@@ -22,3 +22,10 @@ export function initNewBoardButton () {
         })
     })
 }
+
+export function initRenameButton (boardId) {
+    const renameDiv = document.querySelector(`#change-board-name-${boardId}`)
+    const renameForm = htmlFactory.newBoardInput()
+    renameDiv.innerHTML = ''
+    domManager.addChild(`#change-board-name-${boardId}`, renameForm)
+}

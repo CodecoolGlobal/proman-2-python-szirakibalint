@@ -12,7 +12,7 @@ export let boardsManager = {
             console.log(column);
             const columnBuilder = htmlFactory(htmlTemplates.column) ;
             const content = columnBuilder(column) ;
-            domManager.addChild(`.board[data-board-id="${boardId}"]`, content);
+            domManager.addChild(`.board[data-board-id="${boardId} board-columns"]`, content);
         }
     },
     loadBoards: async function () {

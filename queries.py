@@ -51,7 +51,7 @@ def create_new_board(board_name):
         """
         , {"board_name": board_name}, select=False)
 
-
+    
 def update_board_name(board_id, new_name):
     query = """UPDATE boards
                SET title = %(new_name)s
@@ -59,3 +59,23 @@ def update_board_name(board_id, new_name):
     data_manager.execute_select(query,
                                 variables={"board_id": board_id, "new_name": new_name},
                                 select=False)
+
+    
+def create_new_user(username, password):
+    data_manager.execute_select(
+        """
+        INSERT INTO users(username, password)
+        VALUES(%(username)s, %(password)s)
+        """
+        , {"username": username, "password": password}, select=False)
+
+
+def get_user_by_username(username):
+    result = data_manager.execute_select(
+        """
+        SELECT * FROM users
+        WHERE username = %(username)s;
+        """
+        , {"username": username},  fetchall=False)
+    return result
+  

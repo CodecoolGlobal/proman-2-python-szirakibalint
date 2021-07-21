@@ -8,7 +8,7 @@ export let columnsManager = {
         for (let column of columns) {
 
             const columnBuilder = htmlFactory(htmlTemplates.column);
-            const content = columnBuilder(column);
+            const content = columnBuilder(column, boardId);
             domManager.addChild(`.board[data-board-id="${boardId}"] .board-columns`, content);
         }
     }

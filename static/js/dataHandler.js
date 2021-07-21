@@ -78,7 +78,7 @@ async function apiPost(url, payload) {
 }
 
 
-async function apiDelete(url, payload) {
+async function apiDelete(url, payload="") {
     await fetch(url, {
         headers: {
             'Accept': 'application/json',
@@ -87,11 +87,8 @@ async function apiDelete(url, payload) {
         method: 'DELETE',
         body: JSON.stringify(payload)
     })
-
-  
-async function apiDelete(url) {
-    await fetch(url, {method : 'DELETE'})
 }
+
 
 async function apiPut(url, payload) {
     await fetch(url, {
@@ -101,4 +98,4 @@ async function apiPut(url, payload) {
         method: 'PUT',
         body: JSON.stringify(payload)
 })
-}}
+}

@@ -15,7 +15,7 @@ def index():
     return render_template('index.html')
 
 
-@app.route("/boards", methods=['POST', 'PUT'])
+@app.route("/boards", methods=['POST', 'PUT', 'DELETE'])
 def boards():
     if request.method == 'POST':
         board_name = request.get_json()["board_title"]
@@ -25,6 +25,13 @@ def boards():
         board_id = request_json["board_id"]
         new_board_name = request_json["new_title"]
         queries.update_board_name(board_id, new_board_name)
+    elif request.method == 'DELETE':
+        request_json = request.get_json()
+        board_id = request_json["board_id"]
+        status_ids = queries.delete_board(board_id)
+        for status_id in status_ids:
+            if not queries.check_status_id(status_id["status_id"]):
+                queries.delete_status(status_id["status_id"])
     return redirect('/')
 
 
@@ -35,7 +42,7 @@ def columns():
         board_id = request.get_json()["board_id"]
         status_id = queries.get_status_id(column_name)
         queries.create_new_column(board_id, status_id)
-    if request.method == 'PUT':
+    elif request.method == 'PUT':
         request_json = request.get_json()
         board_id = request_json["board_id"]
         column_id = request_json["column_id"]
@@ -44,7 +51,7 @@ def columns():
         queries.update_column(board_id, column_id, status_id)
         if not queries.check_status_id(column_id):
             queries.delete_status(column_id)
-    if request.method == 'DELETE':
+    elif request.method == 'DELETE':
         request_json = request.get_json()
         board_id = request_json["board_id"]
         column_id = request_json["column_id"]

@@ -29,7 +29,8 @@ export let boardsManager = {
             domManager.addEventListener(`.board-toggle[data-board-id="${board.id}"]`, "click", showHideButtonHandler)
             domManager.addEventListener(`.change-board-title[data-board-id="${board.id}"]`, "click", renameTable)
             domManager.addEventListener(`.add-new-column[data-board-id="${board.id}"]`, "click", addNewColumn)
-            this.loadColumns(board.id)
+            domManager.addEventListener(`.delete-board[data-board-id="${board.id}"]`, "click", deleteBoard)
+            await this.loadColumns(board.id)
         }
     },
 }
@@ -59,4 +60,9 @@ function deleteColumn(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId
     const columnId = clickEvent.target.dataset.columnId
     uiManager.initDeleteColumnButton(boardId, columnId)
+}
+
+function deleteBoard(clickEvent) {
+    const boardId = clickEvent.target.dataset.boardId
+    uiManager.initDeleteBoardButton(boardId)
 }

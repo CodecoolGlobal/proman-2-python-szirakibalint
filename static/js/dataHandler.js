@@ -40,6 +40,10 @@ export let dataHandler = {
         const payload = {"board_id": boardId, "column_id": columnId}
         await apiDelete('/columns', payload)
     },
+    deleteBoard: async function (boardId) {
+        const payload = {"board_id": boardId}
+        await apiDelete('/boards', payload)
+    },
     createNewCard: async function (cardTitle, boardId, statusId) {
         // creates new card, saves it and calls the callback function with its data
     }

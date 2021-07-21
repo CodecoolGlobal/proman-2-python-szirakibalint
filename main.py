@@ -114,13 +114,26 @@ def login():
                 return redirect(url_for('index'))
         message = 'Invalid username or password'
 
-    return render_template('registration.html', message=message)
+    return render_template('login.html', message=message)
 
 
 @app.route('/logout')
 def logout():
     session.clear()
     return redirect(url_for('index'))
+
+
+@app.route('/cards/<card_id>', methods=['DELETE'])
+def delete_card(card_id):
+    queries.delete_card(card_id)
+    return "ok"
+
+
+@app.route('/cards', methods=['POST'])
+def create_card():
+    card = request.get_json()
+    queries.create_card(card)
+    return "ok"
 
 
 def main():

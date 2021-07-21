@@ -2,6 +2,8 @@ import * as htmlFactory from "./htmlFactory.js";
 import {domManager} from "./domManager.js";
 import {dataHandler} from "./dataHandler.js";
 import { reset } from "./main.js";
+import {columnsManager} from "./columnsManager.js";
+import {cardsManager} from "./cardsManager.js";
 
 export function initNewBoardDiv () {
     domManager.addChild("#root", `<div id="new-board-form"></div>`)
@@ -33,6 +35,7 @@ export function initRenameButton (boardId) {
     })
 }
 
+
 export function initAddNewColumnButton(boardId) {
     const buttonSpan = document.querySelector(`#add-new-column-${boardId}`)
     buttonSpan.innerHTML = htmlFactory.newColumnInput(boardId)
@@ -62,3 +65,22 @@ export function initDeleteBoardButton(boardId) {
     dataHandler.deleteBoard(boardId).then()
     reset()
 }
+
+export function initCardForm (boardId) {
+    const span = document.querySelector(`#add-new-card-${boardId}`)
+    span.innerHTML = htmlFactory.newCardInput(boardId);
+    domManager.addEventListener(`#submit-new-card-${boardId}`, 'click', async (clickEvent) =>
+    {
+
+        const newCardTitle = document.querySelector(`#new-card-title-${boardId}`).value
+        const firstColumn = document.querySelector(`.board[data-board-id="${boardId}"] .board-column`)
+        console.log(firstColumn)
+        let statusId = firstColumn.dataset.columnId;
+        console.log(statusId);
+        await dataHandler.createNewCard(newCardTitle, boardId, statusId)
+        reset()
+} );
+}
+
+
+

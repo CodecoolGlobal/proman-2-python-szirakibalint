@@ -45,17 +45,19 @@ def columns():
     elif request.method == 'PUT':
         request_json = request.get_json()
         board_id = request_json["board_id"]
-        column_id = request_json["column_id"]
+        column_id_old = request_json["column_id"]
         column_title = request_json["column_title"]
-        status_id = queries.get_status_id(column_title)
-        queries.update_column(board_id, column_id, status_id)
-        if not queries.check_status_id(column_id):
-            queries.delete_status(column_id)
+        column_id_new = queries.get_status_id(column_title)
+        queries.update_column(board_id, column_id_old, column_id_new)
+        queries.update_cards_by_column_change(board_id, column_id_old, column_id_new)
+        if not queries.check_status_id(column_id_old):
+            queries.delete_status(column_id_old)
     elif request.method == 'DELETE':
         request_json = request.get_json()
         board_id = request_json["board_id"]
         column_id = request_json["column_id"]
         queries.delete_column(board_id, column_id)
+        queries.delete_cards_by_column(board_id, column_id)
         if not queries.check_status_id(column_id):
             queries.delete_status(column_id)
     return redirect('/')

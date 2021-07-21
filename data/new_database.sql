@@ -16,8 +16,10 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+ALTER TABLE IF EXISTS ONLY public.boards_statuses DROP CONSTRAINT IF EXISTS fk_status_id;
 ALTER TABLE IF EXISTS ONLY public.cards DROP CONSTRAINT IF EXISTS fk_cards_status_id;
 ALTER TABLE IF EXISTS ONLY public.cards DROP CONSTRAINT IF EXISTS fk_cards_board_id;
+ALTER TABLE IF EXISTS ONLY public.boards_statuses DROP CONSTRAINT IF EXISTS fk_board_id;
 ALTER TABLE IF EXISTS ONLY public.users DROP CONSTRAINT IF EXISTS users_pkey;
 ALTER TABLE IF EXISTS ONLY public.statuses DROP CONSTRAINT IF EXISTS statuses_pkey;
 ALTER TABLE IF EXISTS ONLY public.cards DROP CONSTRAINT IF EXISTS cards_pkey;
@@ -32,6 +34,7 @@ DROP SEQUENCE IF EXISTS public.statuses_id_seq;
 DROP TABLE IF EXISTS public.statuses;
 DROP SEQUENCE IF EXISTS public.cards_id_seq;
 DROP TABLE IF EXISTS public.cards;
+DROP TABLE IF EXISTS public.boards_statuses;
 DROP SEQUENCE IF EXISTS public.boards_id_seq;
 DROP TABLE IF EXISTS public.boards;
 SET default_tablespace = '';
@@ -67,6 +70,16 @@ CREATE SEQUENCE public.boards_id_seq
 --
 
 ALTER SEQUENCE public.boards_id_seq OWNED BY public.boards.id;
+
+
+--
+-- Name: boards_statuses; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.boards_statuses (
+    board_id integer,
+    status_id integer
+);
 
 
 --
@@ -197,6 +210,22 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 
 INSERT INTO public.boards VALUES (1, 'Board 1', NULL);
 INSERT INTO public.boards VALUES (2, 'Board 2', NULL);
+INSERT INTO public.boards VALUES (3, 'banán', NULL);
+INSERT INTO public.boards VALUES (4, 'alma', NULL);
+
+
+--
+-- Data for Name: boards_statuses; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+INSERT INTO public.boards_statuses VALUES (1, 1);
+INSERT INTO public.boards_statuses VALUES (1, 2);
+INSERT INTO public.boards_statuses VALUES (1, 3);
+INSERT INTO public.boards_statuses VALUES (3, 1);
+INSERT INTO public.boards_statuses VALUES (4, 1);
+INSERT INTO public.boards_statuses VALUES (4, 2);
+INSERT INTO public.boards_statuses VALUES (4, 3);
+INSERT INTO public.boards_statuses VALUES (4, 4);
 
 
 --
@@ -237,7 +266,7 @@ INSERT INTO public.statuses VALUES (4, 'done');
 -- Name: boards_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.boards_id_seq', 2, true);
+SELECT pg_catalog.setval('public.boards_id_seq', 4, true);
 
 
 --
@@ -294,6 +323,14 @@ ALTER TABLE ONLY public.users
 
 
 --
+-- Name: boards_statuses fk_board_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.boards_statuses
+    ADD CONSTRAINT fk_board_id FOREIGN KEY (board_id) REFERENCES public.boards(id);
+
+
+--
 -- Name: cards fk_cards_board_id; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -307,6 +344,14 @@ ALTER TABLE ONLY public.cards
 
 ALTER TABLE ONLY public.cards
     ADD CONSTRAINT fk_cards_status_id FOREIGN KEY (status_id) REFERENCES public.statuses(id);
+
+
+--
+-- Name: boards_statuses fk_status_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.boards_statuses
+    ADD CONSTRAINT fk_status_id FOREIGN KEY (status_id) REFERENCES public.statuses(id);
 
 
 --

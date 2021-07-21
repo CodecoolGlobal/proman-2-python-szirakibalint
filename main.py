@@ -75,7 +75,6 @@ def login():
         username = dict(request.form)['username']
         password = dict(request.form)['password']
         user = queries.get_user_by_username(username)
-        print(user['password'])
         if user:
             if check_pw(password, user['password']):
                 session['username'] = username

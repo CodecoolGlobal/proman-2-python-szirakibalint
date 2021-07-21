@@ -34,11 +34,21 @@ export function initRenameButton (boardId) {
 }
 
 export function initAddNewColumnButton(boardId) {
-    const buttonSpan = document.querySelector((`#add-new-column-${boardId}`))
+    const buttonSpan = document.querySelector(`#add-new-column-${boardId}`)
     buttonSpan.innerHTML = htmlFactory.newColumnInput(boardId)
     domManager.addEventListener(`#submit-new-column-title-${boardId}`, 'click', async () => {
         const newColumnTitle = document.querySelector(`#new-column-title-${boardId}`).value
         await dataHandler.createNewColumn(boardId, newColumnTitle)
+        reset()
+    })
+}
+
+export function initRenameColumnButton(boardId, columnId) {
+    const buttonSpan = document.querySelector(`#change-column-title-${boardId}-${columnId}`)
+    buttonSpan.innerHTML = htmlFactory.newColumnInput(boardId, columnId)
+    domManager.addEventListener(`#submit-new-column-title-${boardId}-${columnId}`,'click', async () => {
+        const newColumnTitle = document.querySelector(`#new-column-title-${boardId}-${columnId}`).value
+        await dataHandler.changeColumnTitle(boardId, columnId, newColumnTitle)
         reset()
     })
 }

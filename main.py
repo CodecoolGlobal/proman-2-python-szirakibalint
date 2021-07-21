@@ -35,6 +35,15 @@ def columns():
         board_id = request.get_json()["board_id"]
         status_id = queries.get_status_id(column_name)
         queries.create_new_column(board_id, status_id)
+    if request.method == 'PUT':
+        request_json = request.get_json()
+        board_id = request_json["board_id"]
+        column_id = request_json["column_id"]
+        column_title = request_json["column_title"]
+        status_id = queries.get_status_id(column_title)
+        queries.update_column(board_id, column_id, status_id)
+        if not queries.check_status_id(column_id):
+            queries.delete_status(column_id)
     return redirect('/')
 
 

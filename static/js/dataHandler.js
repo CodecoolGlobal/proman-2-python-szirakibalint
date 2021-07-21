@@ -8,7 +8,6 @@ export let dataHandler = {
     },
     getStatuses: async function (boardId) {
         let response = await apiGet(`/get-statuses/${boardId}`)
-        console.log(response)
         return response
     },
     getStatus: async function (statusId) {
@@ -32,6 +31,10 @@ export let dataHandler = {
     createNewColumn: async function (boardId, columnTitle) {
         const payload = {"board_id": boardId, "column_title": columnTitle}
         await apiPost('/columns', payload)
+    },
+    changeColumnTitle: async function (boardId, columnId, columnTitle) {
+        const payload = {"board_id": boardId, "column_id": columnId, "column_title": columnTitle}
+        await apiPut('/columns', payload)
     },
     createNewCard: async function (cardTitle, boardId, statusId) {
         // creates new card, saves it and calls the callback function with its data

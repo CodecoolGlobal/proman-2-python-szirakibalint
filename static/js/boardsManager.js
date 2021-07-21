@@ -9,10 +9,10 @@ export let boardsManager = {
     loadColumns: async function (boardId) {
         const columns = await dataHandler.getStatuses(boardId);
         for (let column of columns) {
-            console.log(column);
-            const columnBuilder = htmlFactory(htmlTemplates.column) ;
-            const content = columnBuilder(column) ;
+            const columnBuilder = htmlFactory(htmlTemplates.column);
+            const content = columnBuilder(column, boardId);
             domManager.addChild(`.board[data-board-id="${boardId}"] .board-columns`, content);
+            domManager.addEventListener(`#change-column-title-button-${boardId}-${column.id}`, "click", renameColumn)
         }
     },
     loadBoards: async function () {
@@ -46,4 +46,10 @@ function renameTable(clickEvent) {
 function addNewColumn(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId
     uiManager.initAddNewColumnButton(boardId)
+}
+
+function renameColumn(clickEvent) {
+    const boardId = clickEvent.target.dataset.boardId
+    const columnId = clickEvent.target.dataset.columnId
+    uiManager.initRenameColumnButton(boardId, columnId)
 }

@@ -72,7 +72,6 @@ def create_new_board(board_name):
             , {"status": i}, select=False)
 
 
-    
 def update_board_name(board_id, new_name):
     query = """UPDATE boards
                SET title = %(new_name)s
@@ -147,3 +146,34 @@ def create_new_column(board_id, status_id):
         VALUES(%(board_id)s, %(status_id)s)
         """
         , {"board_id": board_id, "status_id": status_id}, select=False)
+
+
+def update_column(board_id, status_id_old, status_id_new):
+    data_manager.execute_select(
+        """
+        UPDATE boards_statuses
+        SET status_id = %(status)s
+        WHERE board_id = %(board)s AND status_id = %(old_status)s
+        """
+        , {"status": status_id_new, "board": board_id, "old_status": status_id_old}, select=False)
+
+
+def check_status_id(status_id):
+    exists = data_manager.execute_select(
+        """
+        SELECT 
+        EXISTS(SELECT 1 FROM boards_statuses
+        WHERE status_id = %(status_id)s)
+        """
+        , {"status_id": status_id}, fetchall=False)
+    exists = dict(exists)["exists"]
+    return exists
+
+
+def delete_status(status_id):
+    data_manager.execute_select(
+        """
+        DELETE from statuses
+        WHERE id = %(status)s
+        """
+        , {"status": status_id}, select=False)

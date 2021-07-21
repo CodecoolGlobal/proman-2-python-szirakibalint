@@ -33,8 +33,9 @@ function boardBuilder(board) {
             </section>`
 }
 
-function columnBuilder(column) {
+function columnBuilder(column, boardId) {
     return `<div class="board-column">
+                <div id="change-column-title-${boardId}-${column.id}"><button id="change-column-title-button-${boardId}-${column.id}" data-board-id=${boardId} data-column-id=${column.id}>Change Title</button></div>
                 <div class="board-column-title"> ${column.title} </div>
                 <div class="board-column-content"></div>
              </div>`;

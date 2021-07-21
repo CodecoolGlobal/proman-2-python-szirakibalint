@@ -14,7 +14,9 @@ export function htmlFactory(template) {
             return columnBuilder
         default:
             console.error("Undefined template: " + template)
-            return () => { return "" }
+            return () => {
+                return ""
+            }
     }
 }
 
@@ -24,7 +26,8 @@ function boardBuilder(board) {
                     <span class="board-title" >${board.title}</span>
                     <span id="change-board-title-${board.id}"><button class="change-board-title" data-board-id=${board.id}>Change Title</button></span>
                     <span id="add-new-column-${board.id}"><button class="add-new-column" data-board-id=${board.id}>Add new column</button></span>
-                    <button class="board-toggle" data-board-id="${board.id}">
+                    <span id="add-new-card-${board.id}"><button class="board-add" data-board-id=${board.id}>Add card</button></span>
+                    <button class="board-toggle" data-toggle-state="hide" data-board-id="${board.id}">
                         Show Cards
                         <i class="fas fa-chevron-down"></i>
                     </button>
@@ -34,7 +37,7 @@ function boardBuilder(board) {
 }
 
 function columnBuilder(column) {
-    return `<div class="board-column">
+    return `<div class="board-column" data-column-id="${column.id}">
                 <div class="board-column-title"> ${column.title} </div>
                 <div class="board-column-content"></div>
              </div>`;
@@ -47,11 +50,25 @@ function cardBuilder(card) {
             </div>`;
 }
 
-export function newBoardInput (board_id="") {
-    board_id = board_id ? `-${board_id}` : ""
-    return `<input type="text" placeholder="Enter new board title" id="new-board-title${board_id}" required autofocus autocomplete="off"><button id="submit-new-board-title${board_id}">Save</button>`
+export function newBoardInput(boardId = "") {
+    boardId = boardId ? `-${boardId}` : ""
+    return `<input type="text" placeholder="Enter new board title" id="new-board-title${boardId}" required autofocus autocomplete="off"><button id="submit-new-board-title${boardId}">Save</button>`
 }
 
-export function newBoardButton () {
+export function newBoardButton() {
     return `<button type="button" id="load-new-board-form">Create new board</button>`
+}
+
+
+export function newCardInput(boardId = "") {
+
+    return `<input type="text" 
+                    placeholder="Enter new card title" 
+                    id="new-card-title-${boardId}" 
+                    required 
+                    autofocus 
+                    autocomplete="off">
+            <button id="submit-new-card-${boardId}" data-board-id="${boardId}">
+                    Save
+              </button>`
 }

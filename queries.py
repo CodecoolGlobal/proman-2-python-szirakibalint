@@ -99,4 +99,26 @@ def get_user_by_username(username):
         """
         , {"username": username},  fetchall=False)
     return result
-  
+
+
+def delete_card(card_id):
+    data_manager.execute_select(
+        """
+        DELETE FROM cards 
+        WHERE id = %(card_id)s;
+        """, {"card_id": card_id}, select=False)
+
+
+def create_card(card):
+    data_manager.execute_select(
+        """
+        INSERT INTO cards (board_id, status_id, title, card_order) 
+        VALUES (%(board_id)s, 
+                %(status_id)s, 
+                %(title)s, 
+                (SELECT MAX(CARD_ORDER) FROM cards WHERE STATUS_ID=%(status_id)s AND BOARD_ID=%(board_id)s))
+        """, {"board_id": card["board_id"],
+              "status_id": card["status_id"],
+              "title": card["title"]
+              },
+        select=False)

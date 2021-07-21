@@ -46,10 +46,7 @@ function columnBuilder(column, boardId) {
     return `<div class="board-column">
                 <span id="change-column-title-${boardId}-${column.id}"><button id="change-column-title-button-${boardId}-${column.id}" data-board-id=${boardId} data-column-id=${column.id}>Change Title</button></span>
                 <span id="delete-column-${boardId}-${column.id}"><button id="delete-column-button-${boardId}-${column.id}" data-board-id=${boardId} data-column-id=${column.id}>Delete column</button></span>
-
-function columnBuilder(column) {
-    return `<div class="board-column" data-column-id="${column.id}">
-
+                <div class="board-column" data-column-id="${column.id}">
                 <div class="board-column-title"> ${column.title} </div>
                 <div class="board-column-content"></div>
              </div>`;

@@ -2,28 +2,12 @@ import { dataHandler } from "./dataHandler.js";
 import { htmlFactory, htmlTemplates } from "./htmlFactory.js";
 import { domManager } from "./domManager.js";
 import { cardsManager } from "./cardsManager.js";
-
+import {initCardForm, initRenameButton} from "./uiManager.js";
+import {columnsManager} from "./columnsManager.js";
 import * as uiManager from "./uiManager.js";
 
 
 export let boardsManager = {
-    loadColumns: async function (boardId) {
-        const columns = await dataHandler.getStatuses(boardId);
-        for (let column of columns) {
-            const columnBuilder = htmlFactory(htmlTemplates.column);
-            const content = columnBuilder(column, boardId);
-            domManager.addChild(`.board[data-board-id="${boardId}"] .board-columns`, content);
-            domManager.addEventListener(`#change-column-title-button-${boardId}-${column.id}`, "click", renameColumn)
-            domManager.addEventListener(`#delete-column-button-${boardId}-${column.id}`, "click", deleteColumn)
-        }
-    },
-
-import {initCardForm, initRenameButton} from "./uiManager.js";
-import {columnsManager} from "./columnsManager.js";
-
-
-export let boardsManager = {
-
     loadBoards: async function () {
         const boards = await dataHandler.getBoards();
         let boardContainer = document.createElement('div')
@@ -39,7 +23,6 @@ export let boardsManager = {
 
             domManager.addEventListener(`.add-new-column[data-board-id="${board.id}"]`, "click", addNewColumn)
             domManager.addEventListener(`.delete-board[data-board-id="${board.id}"]`, "click", deleteBoard)
-            await this.loadColumns(board.id)
 
             domManager.addEventListener(`.board-add[data-board-id="${board.id}"]`, "click", addCard)
 

@@ -137,7 +137,7 @@ def create_card():
 
 
 def main():
-    app.run(debug=True)
+    app.run(debug=True, port=8001)
 
     # Serving the favicon
     with app.app_context():

@@ -9,6 +9,7 @@ export let dataHandler = {
     getStatuses: async function (boardId) {
         let response = await apiGet(`/get-statuses/${boardId}`)
 
+        
         return response
     },
     getStatus: async function (statusId) {
@@ -25,9 +26,25 @@ export let dataHandler = {
         const payload = {"board_title": boardTitle}
         await apiPost('/boards', payload)
     },
-    changeBoardTitle: async function (boardID, newBoardTitle) {
-        const payload = {"board_id": boardID, "new_title": newBoardTitle}
+    changeBoardTitle: async function (boardId, newBoardTitle) {
+        const payload = {"board_id": boardId, "new_title": newBoardTitle}
         await apiPut('/boards', payload)
+    },
+    createNewColumn: async function (boardId, columnTitle) {
+        const payload = {"board_id": boardId, "column_title": columnTitle}
+        await apiPost('/columns', payload)
+    },
+    changeColumnTitle: async function (boardId, columnId, columnTitle) {
+        const payload = {"board_id": boardId, "column_id": columnId, "column_title": columnTitle}
+        await apiPut('/columns', payload)
+    },
+    deleteColumn: async function (boardId, columnId) {
+        const payload = {"board_id": boardId, "column_id": columnId}
+        await apiDelete('/columns', payload)
+    },
+    deleteBoard: async function (boardId) {
+        const payload = {"board_id": boardId}
+        await apiDelete('/boards', payload)
     },
     createNewCard: async function (cardTitle, boardId, statusId) {
         // creates new card, saves it and calls the callback function with its data
@@ -60,6 +77,18 @@ async function apiPost(url, payload) {
     })
 }
 
+
+async function apiDelete(url, payload) {
+    await fetch(url, {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method: 'DELETE',
+        body: JSON.stringify(payload)
+    })
+
+  
 async function apiDelete(url) {
     await fetch(url, {method : 'DELETE'})
 }

@@ -26,8 +26,13 @@ function boardBuilder(board) {
                     <span class="board-title" >${board.title}</span>
                     <span id="change-board-title-${board.id}"><button class="change-board-title" data-board-id=${board.id}>Change Title</button></span>
                     <span id="add-new-column-${board.id}"><button class="add-new-column" data-board-id=${board.id}>Add new column</button></span>
+
+                    <span id="delete-board-${board.id}"><button class="delete-board" data-board-id=${board.id}>Delete board</button></span>
+                    <button class="board-toggle" data-board-id="${board.id}">
+
                     <span id="add-new-card-${board.id}"><button class="board-add" data-board-id=${board.id}>Add card</button></span>
                     <button class="board-toggle" data-toggle-state="hide" data-board-id="${board.id}">
+
                         Show Cards
                         <i class="fas fa-chevron-down"></i>
                     </button>
@@ -36,8 +41,15 @@ function boardBuilder(board) {
             </section>`
 }
 
+
+function columnBuilder(column, boardId) {
+    return `<div class="board-column">
+                <span id="change-column-title-${boardId}-${column.id}"><button id="change-column-title-button-${boardId}-${column.id}" data-board-id=${boardId} data-column-id=${column.id}>Change Title</button></span>
+                <span id="delete-column-${boardId}-${column.id}"><button id="delete-column-button-${boardId}-${column.id}" data-board-id=${boardId} data-column-id=${column.id}>Delete column</button></span>
+
 function columnBuilder(column) {
     return `<div class="board-column" data-column-id="${column.id}">
+
                 <div class="board-column-title"> ${column.title} </div>
                 <div class="board-column-content"></div>
              </div>`;
@@ -59,6 +71,11 @@ export function newBoardButton() {
     return `<button type="button" id="load-new-board-form">Create new board</button>`
 }
 
+export function newColumnInput (board_id, column_id="") {
+    column_id = column_id ? `-${column_id}` : ""
+    return `<input type="text" placeholder="Enter new column title" id="new-column-title-${board_id}${column_id}" required autofocus autocomplete="off"><button id="submit-new-column-title-${board_id}${column_id}">Save</button>`
+}
+
 
 export function newCardInput(boardId = "") {
 
@@ -72,3 +89,4 @@ export function newCardInput(boardId = "") {
                     Save
               </button>`
 }
+

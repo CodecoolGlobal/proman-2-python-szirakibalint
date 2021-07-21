@@ -7,7 +7,7 @@ app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 
-@app.route("/", methods=['GET', 'POST', 'PUT'])
+@app.route("/", methods=['GET', 'POST', 'PUT', 'DELETE'])
 def index():
     """
     This is a one-pager which shows all the boards and cards
@@ -15,7 +15,7 @@ def index():
     return render_template('index.html')
 
 
-@app.route("/boards", methods=['POST', 'PUT'])
+@app.route("/boards", methods=['POST', 'PUT', 'DELETE'])
 def boards():
     if request.method == 'POST':
         board_name = request.get_json()["board_title"]
@@ -25,6 +25,39 @@ def boards():
         board_id = request_json["board_id"]
         new_board_name = request_json["new_title"]
         queries.update_board_name(board_id, new_board_name)
+    elif request.method == 'DELETE':
+        request_json = request.get_json()
+        board_id = request_json["board_id"]
+        status_ids = queries.delete_board(board_id)
+        for status_id in status_ids:
+            if not queries.check_status_id(status_id["status_id"]):
+                queries.delete_status(status_id["status_id"])
+    return redirect('/')
+
+
+@app.route("/columns", methods=['POST', 'PUT', 'DELETE'])
+def columns():
+    if request.method == 'POST':
+        column_name = request.get_json()["column_title"]
+        board_id = request.get_json()["board_id"]
+        status_id = queries.get_status_id(column_name)
+        queries.create_new_column(board_id, status_id)
+    elif request.method == 'PUT':
+        request_json = request.get_json()
+        board_id = request_json["board_id"]
+        column_id = request_json["column_id"]
+        column_title = request_json["column_title"]
+        status_id = queries.get_status_id(column_title)
+        queries.update_column(board_id, column_id, status_id)
+        if not queries.check_status_id(column_id):
+            queries.delete_status(column_id)
+    elif request.method == 'DELETE':
+        request_json = request.get_json()
+        board_id = request_json["board_id"]
+        column_id = request_json["column_id"]
+        queries.delete_column(board_id, column_id)
+        if not queries.check_status_id(column_id):
+            queries.delete_status(column_id)
     return redirect('/')
 
 

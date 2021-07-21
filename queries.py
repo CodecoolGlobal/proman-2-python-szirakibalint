@@ -236,7 +236,12 @@ def create_card(card):
         VALUES (%(board_id)s, 
                 %(status_id)s, 
                 %(title)s, 
-                (SELECT MAX(CARD_ORDER) FROM cards WHERE STATUS_ID=%(status_id)s AND BOARD_ID=%(board_id)s))
+                COALESCE(
+                (SELECT MAX(CARD_ORDER) 
+                    FROM cards 
+                    WHERE STATUS_ID=%(status_id)s 
+                    AND BOARD_ID=%(board_id)s),
+                    0)+ 1)
         """, {"board_id": card["board_id"],
               "status_id": card["status_id"],
               "title": card["title"]

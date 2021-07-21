@@ -140,22 +140,25 @@ def get_status_id(status):
 
 
 def create_new_column(board_id, status_id):
-    data_manager.execute_select(
-        """
-        INSERT INTO boards_statuses
-        VALUES(%(board_id)s, %(status_id)s)
-        """
-        , {"board_id": board_id, "status_id": status_id}, select=False)
+    if not check_if_column_exists(board_id, status_id):
+        data_manager.execute_select(
+            """
+            INSERT INTO boards_statuses
+            VALUES(%(board_id)s, %(status_id)s)
+            """
+            , {"board_id": board_id, "status_id": status_id}, select=False)
 
 
 def update_column(board_id, status_id_old, status_id_new):
-    data_manager.execute_select(
-        """
-        UPDATE boards_statuses
-        SET status_id = %(status)s
-        WHERE board_id = %(board)s AND status_id = %(old_status)s
-        """
-        , {"status": status_id_new, "board": board_id, "old_status": status_id_old}, select=False)
+    if not check_if_column_exists(board_id, status_id_new):
+        update_cards_by_column_change(board_id, status_id_old, status_id_new)
+        data_manager.execute_select(
+            """
+            UPDATE boards_statuses
+            SET status_id = %(status)s
+            WHERE board_id = %(board)s AND status_id = %(old_status)s
+            """
+            , {"status": status_id_new, "board": board_id, "old_status": status_id_old}, select=False)
 
 
 def check_status_id(status_id):
@@ -262,3 +265,15 @@ def update_cards_by_column_change(board_id, status_id_old, status_id_new):
         WHERE board_id = %(board)s AND status_id = %(old_status)s
         """
         , {"status": status_id_new, "board": board_id, "old_status": status_id_old}, select=False)
+
+
+def check_if_column_exists(board_id, status_id):
+    exists = data_manager.execute_select(
+        """
+        SELECT 
+        EXISTS(SELECT 1 FROM boards_statuses
+        WHERE status_id = %(status_id)s AND board_id = %(board_id)s)
+        """
+        , {"status_id": status_id, "board_id": board_id}, fetchall=False)
+    exists = dict(exists)["exists"]
+    return exists

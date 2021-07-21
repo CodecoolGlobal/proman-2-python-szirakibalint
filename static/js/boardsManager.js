@@ -2,7 +2,7 @@ import { dataHandler } from "./dataHandler.js";
 import { htmlFactory, htmlTemplates } from "./htmlFactory.js";
 import { domManager } from "./domManager.js";
 import { cardsManager } from "./cardsManager.js";
-import { initRenameButton } from "./uiManager.js";
+import {initCardForm, initRenameButton} from "./uiManager.js";
 import {columnsManager} from "./columnsManager.js";
 
 
@@ -19,7 +19,7 @@ export let boardsManager = {
             domManager.addChild(".board-container", content)
             domManager.addEventListener(`.board-toggle[data-board-id="${board.id}"]`, "click", showHideButtonHandler)
             domManager.addEventListener(`.change-board-title[data-board-id="${board.id}"]`, "click", renameTable)
-            //await columnsManager.loadColumns(board.id)
+            domManager.addEventListener(`.board-add[data-board-id="${board.id}"]`, "click", addCard)
         }
     },
 }
@@ -33,7 +33,6 @@ async function showHideButtonHandler(clickEvent) {
         button.dataset.toggleState = "show";
         button.innerHTML= ` Hide cards <i class=\"fas fa-chevron-up\"></i> `
     } else {
-
         const columnContent = document.querySelector(`.board[data-board-id="${boardId}"] .board-columns`)
         columnContent.innerHTML = '';
         button.dataset.toggleState = "hide";
@@ -44,4 +43,18 @@ async function showHideButtonHandler(clickEvent) {
 function renameTable(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId
     initRenameButton(boardId)
+}
+
+async function addCard(clickEvent) {
+    const boardId = clickEvent.target.dataset.boardId;
+
+    const button = document.querySelector(`.board[data-board-id="${boardId}"] .board-toggle`);
+    console.log(button);
+    if (button.dataset.toggleState === "hide") {
+        await columnsManager.loadColumns(boardId)
+        await cardsManager.loadCards(boardId)
+        button.dataset.toggleState = "show";
+        button.innerHTML= ` Hide cards <i class=\"fas fa-chevron-up\"></i> `
+    }
+    initCardForm(boardId);
 }

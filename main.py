@@ -96,6 +96,13 @@ def delete_card(card_id):
     return "ok"
 
 
+@app.route('/cards', methods=['POST'])
+def create_card():
+    card = request.get_json()
+    queries.create_card(card)
+    return "ok"
+
+
 def main():
     app.run(debug=True)
 

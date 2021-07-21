@@ -31,6 +31,8 @@ export let dataHandler = {
     },
     createNewCard: async function (cardTitle, boardId, statusId) {
         // creates new card, saves it and calls the callback function with its data
+        const payload = {"title": cardTitle, "board_id":boardId, "status_id":statusId}
+        await apiPost('/cards', payload)
     },
 
     deleteCard: async function (cardId) {

@@ -2,7 +2,7 @@ import { dataHandler } from "./dataHandler.js";
 import { htmlFactory, htmlTemplates } from "./htmlFactory.js";
 import { domManager } from "./domManager.js";
 import { cardsManager } from "./cardsManager.js";
-import { initRenameButton } from "./uiManager.js";
+import * as uiManager from "./uiManager.js";
 
 
 export let boardsManager = {
@@ -27,6 +27,7 @@ export let boardsManager = {
             domManager.addChild(".board-container", content)
             domManager.addEventListener(`.board-toggle[data-board-id="${board.id}"]`, "click", showHideButtonHandler)
             domManager.addEventListener(`.change-board-title[data-board-id="${board.id}"]`, "click", renameTable)
+            domManager.addEventListener(`.add-new-column[data-board-id="${board.id}"]`, "click", addNewColumn)
             this.loadColumns(board.id)
         }
     },
@@ -39,5 +40,10 @@ function showHideButtonHandler(clickEvent) {
 
 function renameTable(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId
-    initRenameButton(boardId)
+    uiManager.initRenameButton(boardId)
+}
+
+function addNewColumn(clickEvent) {
+    const boardId = clickEvent.target.dataset.boardId
+    uiManager.initAddNewColumnButton(boardId)
 }

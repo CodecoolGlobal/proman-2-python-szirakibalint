@@ -28,6 +28,16 @@ def boards():
     return redirect('/')
 
 
+@app.route("/columns", methods=['POST', 'PUT'])
+def columns():
+    if request.method == 'POST':
+        column_name = request.get_json()["column_title"]
+        board_id = request.get_json()["board_id"]
+        status_id = queries.get_status_id(column_name)
+        queries.create_new_column(board_id, status_id)
+    return redirect('/')
+
+
 @app.route("/get-boards")
 @json_response
 def get_boards():

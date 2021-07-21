@@ -99,4 +99,51 @@ def get_user_by_username(username):
         """
         , {"username": username},  fetchall=False)
     return result
-  
+
+
+def check_status(status):
+    exists = data_manager.execute_select(
+        """
+        SELECT 
+        EXISTS(SELECT 1 FROM statuses
+        WHERE title = %(status)s)
+        """
+        , {"status": status}, fetchall=False)
+    exists = dict(exists)["exists"]
+    return exists
+
+
+def get_status_id(status):
+    exists = check_status(status)
+    if exists:
+        data_id = data_manager.execute_select(
+            """
+            SELECT id
+            FROM statuses
+            WHERE title = %(status)s
+            """
+            , {"status": status}, fetchall=False)
+    else:
+        data_manager.execute_select(
+            """
+            INSERT INTO statuses(title)
+            VALUES(%(status)s)
+            """
+            , {"status": status}, select=False)
+        data_id = data_manager.execute_select(
+            """
+            SELECT MAX(id) AS id
+            FROM statuses
+            """
+            , fetchall=False)
+    status_id = data_id['id']
+    return status_id
+
+
+def create_new_column(board_id, status_id):
+    data_manager.execute_select(
+        """
+        INSERT INTO boards_statuses
+        VALUES(%(board_id)s, %(status_id)s)
+        """
+        , {"board_id": board_id, "status_id": status_id}, select=False)

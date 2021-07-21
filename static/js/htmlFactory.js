@@ -55,3 +55,8 @@ export function newBoardInput (board_id="") {
 export function newBoardButton () {
     return `<button type="button" id="load-new-board-form">Create new board</button>`
 }
+
+export function newColumnInput (board_id, column_id="") {
+    column_id = column_id ? `-${column_id}` : ""
+    return `<input type="text" placeholder="Enter new column title" id="new-column-title-${board_id}${column_id}" required autofocus autocomplete="off"><button id="submit-new-column-title-${board_id}${column_id}">Save</button>`
+}

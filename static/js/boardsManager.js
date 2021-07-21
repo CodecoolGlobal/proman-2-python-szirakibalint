@@ -13,6 +13,7 @@ export let boardsManager = {
             const content = columnBuilder(column, boardId);
             domManager.addChild(`.board[data-board-id="${boardId}"] .board-columns`, content);
             domManager.addEventListener(`#change-column-title-button-${boardId}-${column.id}`, "click", renameColumn)
+            domManager.addEventListener(`#delete-column-button-${boardId}-${column.id}`, "click", deleteColumn)
         }
     },
     loadBoards: async function () {
@@ -52,4 +53,10 @@ function renameColumn(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId
     const columnId = clickEvent.target.dataset.columnId
     uiManager.initRenameColumnButton(boardId, columnId)
+}
+
+function deleteColumn(clickEvent) {
+    const boardId = clickEvent.target.dataset.boardId
+    const columnId = clickEvent.target.dataset.columnId
+    uiManager.initDeleteColumnButton(boardId, columnId)
 }

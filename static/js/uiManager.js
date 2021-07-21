@@ -52,3 +52,9 @@ export function initRenameColumnButton(boardId, columnId) {
         reset()
     })
 }
+
+export function initDeleteColumnButton(boardId, columnId) {
+    const buttonSpan = document.querySelector(`delete-column-${boardId}-${columnId}`)
+    dataHandler.deleteColumn(boardId, columnId).then()
+    reset()
+}

@@ -7,7 +7,7 @@ app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 
-@app.route("/", methods=['GET', 'POST', 'PUT'])
+@app.route("/", methods=['GET', 'POST', 'PUT', 'DELETE'])
 def index():
     """
     This is a one-pager which shows all the boards and cards
@@ -28,7 +28,7 @@ def boards():
     return redirect('/')
 
 
-@app.route("/columns", methods=['POST', 'PUT'])
+@app.route("/columns", methods=['POST', 'PUT', 'DELETE'])
 def columns():
     if request.method == 'POST':
         column_name = request.get_json()["column_title"]
@@ -42,6 +42,13 @@ def columns():
         column_title = request_json["column_title"]
         status_id = queries.get_status_id(column_title)
         queries.update_column(board_id, column_id, status_id)
+        if not queries.check_status_id(column_id):
+            queries.delete_status(column_id)
+    if request.method == 'DELETE':
+        request_json = request.get_json()
+        board_id = request_json["board_id"]
+        column_id = request_json["column_id"]
+        queries.delete_column(board_id, column_id)
         if not queries.check_status_id(column_id):
             queries.delete_status(column_id)
     return redirect('/')

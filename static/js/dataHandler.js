@@ -36,6 +36,10 @@ export let dataHandler = {
         const payload = {"board_id": boardId, "column_id": columnId, "column_title": columnTitle}
         await apiPut('/columns', payload)
     },
+    deleteColumn: async function (boardId, columnId) {
+        const payload = {"board_id": boardId, "column_id": columnId}
+        await apiDelete('/columns', payload)
+    },
     createNewCard: async function (cardTitle, boardId, statusId) {
         // creates new card, saves it and calls the callback function with its data
     }
@@ -61,7 +65,15 @@ async function apiPost(url, payload) {
     })
 }
 
-async function apiDelete(url) {
+async function apiDelete(url, payload) {
+    await fetch(url, {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method: 'DELETE',
+        body: JSON.stringify(payload)
+    })
 }
 
 async function apiPut(url, payload) {

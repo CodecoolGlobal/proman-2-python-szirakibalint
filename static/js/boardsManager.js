@@ -3,18 +3,10 @@ import { htmlFactory, htmlTemplates } from "./htmlFactory.js";
 import { domManager } from "./domManager.js";
 import { cardsManager } from "./cardsManager.js";
 import { initRenameButton } from "./uiManager.js";
+import {columnsManager} from "./columnsManager.js";
 
 
 export let boardsManager = {
-    loadColumns: async function (boardId) {
-        const columns = await dataHandler.getStatuses(boardId);
-        for (let column of columns) {
-
-            const columnBuilder = htmlFactory(htmlTemplates.column) ;
-            const content = columnBuilder(column) ;
-            domManager.addChild(`.board[data-board-id="${boardId}"] .board-columns`, content);
-        }
-    },
     loadBoards: async function () {
         const boards = await dataHandler.getBoards();
         let boardContainer = document.createElement('div')
@@ -27,14 +19,26 @@ export let boardsManager = {
             domManager.addChild(".board-container", content)
             domManager.addEventListener(`.board-toggle[data-board-id="${board.id}"]`, "click", showHideButtonHandler)
             domManager.addEventListener(`.change-board-title[data-board-id="${board.id}"]`, "click", renameTable)
-            this.loadColumns(board.id)
+            //await columnsManager.loadColumns(board.id)
         }
     },
 }
 
-function showHideButtonHandler(clickEvent) {
-    const boardId = clickEvent.target.dataset.boardId
-    cardsManager.loadCards(boardId)
+async function showHideButtonHandler(clickEvent) {
+    const button = clickEvent.target;
+    const boardId = button.dataset.boardId
+    if (button.dataset.toggleState === "hide") {
+        await columnsManager.loadColumns(boardId)
+        await cardsManager.loadCards(boardId)
+        button.dataset.toggleState = "show";
+        button.innerHTML= ` Hide cards <i class=\"fas fa-chevron-up\"></i> `
+    } else {
+
+        const columnContent = document.querySelector(`.board[data-board-id="${boardId}"] .board-columns`)
+        columnContent.innerHTML = '';
+        button.dataset.toggleState = "hide";
+        button.innerHTML= ` Show cards <i class=\"fas fa-chevron-down\"></i> `
+    }
 }
 
 function renameTable(clickEvent) {

@@ -56,17 +56,7 @@ function addNewColumn(clickEvent) {
     uiManager.initAddNewColumnButton(boardId)
 }
 
-function renameColumn(clickEvent) {
-    const boardId = clickEvent.target.dataset.boardId
-    const columnId = clickEvent.target.dataset.columnId
-    uiManager.initRenameColumnButton(boardId, columnId)
-}
 
-function deleteColumn(clickEvent) {
-    const boardId = clickEvent.target.dataset.boardId
-    const columnId = clickEvent.target.dataset.columnId
-    uiManager.initDeleteColumnButton(boardId, columnId)
-}
 
 function deleteBoard(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId

@@ -9,7 +9,7 @@ export let boardsManager = {
     loadColumns: async function (boardId) {
         const columns = await dataHandler.getStatuses(boardId);
         for (let column of columns) {
-            console.log(column);
+
             const columnBuilder = htmlFactory(htmlTemplates.column) ;
             const content = columnBuilder(column) ;
             domManager.addChild(`.board[data-board-id="${boardId}"] .board-columns`, content);

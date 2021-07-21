@@ -99,4 +99,11 @@ def get_user_by_username(username):
         """
         , {"username": username},  fetchall=False)
     return result
-  
+
+
+def delete_card(card_id):
+    data_manager.execute_select(
+        """
+        DELETE FROM cards 
+        WHERE id = %(card_id)s;
+        """, {"card_id": card_id}, select=False)

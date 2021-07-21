@@ -1,6 +1,7 @@
 import { dataHandler } from "./dataHandler.js";
 import { htmlFactory, htmlTemplates } from "./htmlFactory.js";
 import { domManager } from "./domManager.js";
+import {reset} from "./main.js";
 
 export let cardsManager = {
 
@@ -18,7 +19,7 @@ export let cardsManager = {
 
 async function deleteButtonHandler(clickEvent) {
     const cardId = clickEvent.currentTarget.dataset.cardId;
-
-    await dataHandler.deleteCard(cardId)
+    await dataHandler.deleteCard(cardId);
+    reset();
 }
 

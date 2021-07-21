@@ -1,6 +1,7 @@
 export const htmlTemplates = {
     board: 1,
-    card: 2
+    card: 2,
+    column: 3
 }
 
 export function htmlFactory(template) {
@@ -9,6 +10,8 @@ export function htmlFactory(template) {
             return boardBuilder
         case htmlTemplates.card:
             return cardBuilder
+        case htmlTemplates.column:
+            return columnBuilder
         default:
             console.error("Undefined template: " + template)
             return () => { return "" }
@@ -16,20 +19,36 @@ export function htmlFactory(template) {
 }
 
 function boardBuilder(board) {
-    return `<div class="board-container">
-                <div class="board" data-board-id=${board.id}>${board.title}</div>
-                <div id="change-board-name-${board.id}"><button class="change-board-name" data-board-id=${board.id}>Change Title</button></div>
-                <button class="toggle-board-button" data-board-id="${board.id}">Show Cards</button>
-            </div>`;
+    return `<section class="board" data-board-id=${board.id}>
+                <div class="board-header">
+                    <span class="board-title" >${board.title}</span>
+                    <span id="change-board-title-${board.id}"><button class="change-board-title" data-board-id=${board.id}>Change Title</button></span>
+                    <button class="board-toggle" data-board-id="${board.id}">
+                        Show Cards
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                </div>
+                <div class="board-columns"></div>
+            </section>`
+}
+
+function columnBuilder(column) {
+    return `<div class="board-column">
+                <div class="board-column-title"> ${column.title} </div>
+                <div class="board-column-content"></div>
+             </div>`;
 }
 
 function cardBuilder(card) {
-    return `<div class="card" data-card-id="${card.id}">${card.title}</div>`;
+    return `<div class="card" data-card-id="${card.id}">
+                <div class="card-remove"><i class="fas fa-trash-alt"></i></div>
+                <div class="card-title">${card.title}</div>
+            </div>`;
 }
 
 export function newBoardInput (board_id="") {
     board_id = board_id ? `-${board_id}` : ""
-    return `<input type="text" placeholder="Enter new board name" id="new-board-name${board_id}" required autofocus autocomplete="off"><button id="submit-new-board-title${board_id}">Save</button>`
+    return `<input type="text" placeholder="Enter new board title" id="new-board-title${board_id}" required autofocus autocomplete="off"><button id="submit-new-board-title${board_id}">Save</button>`
 }
 
 export function newBoardButton () {

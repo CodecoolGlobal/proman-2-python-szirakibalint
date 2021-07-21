@@ -47,6 +47,12 @@ def get_cards_for_board(board_id: int):
     return queries.get_cards_for_board(board_id)
 
 
+@app.route("/get-statuses/<int:board_id>")
+@json_response
+def get_statuses_for_board(board_id: int):
+    return queries.get_statuses_for_board(board_id)
+
+
 @app.route('/registration', methods=['GET', 'POST'])
 def registration():
     message = ''

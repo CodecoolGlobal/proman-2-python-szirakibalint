@@ -16,18 +16,18 @@ export function initNewBoardButton () {
         const form = document.querySelector('#new-board-form')
         form.innerHTML = htmlFactory.newBoardInput()
         domManager.addEventListener('#submit-new-board-title', 'click', async () => {
-            const boardTitle = document.querySelector('#new-board-name').value
+            const boardTitle = document.querySelector('#new-board-title').value
             await dataHandler.createNewBoard(boardTitle)
             reset()
         })
     })
 }
 
-export function initRenameButton (boardId, renameButton) {
-    const renameDiv = document.querySelector(`#change-board-name-${boardId}`)
+export function initRenameButton (boardId) {
+    const renameDiv = document.querySelector(`#change-board-title-${boardId}`)
     renameDiv.innerHTML = htmlFactory.newBoardInput(boardId)
     domManager.addEventListener(`#submit-new-board-title-${boardId}`, 'click', async () => {
-        const newBoardTitle = document.querySelector(`#new-board-name-${boardId}`).value
+        const newBoardTitle = document.querySelector(`#new-board-title-${boardId}`).value
         await dataHandler.changeBoardTitle(boardId, newBoardTitle)
         reset()
     })

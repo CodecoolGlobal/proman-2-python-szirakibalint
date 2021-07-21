@@ -6,13 +6,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/solid.css" integrity="sha384-rdyFrfAIC05c5ph7BKz3l5NG5yEottvO/DQ0dCrwD8gzeQDjYBHNr1ucUpQuljos" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/fontawesome.css" integrity="sha384-u5J7JghGz0qUrmEsWzBQkfvc8nK3fUT7DCaQzNQ+q4oEXhGSx+P2OqjWsfIRB8QT" crossorigin="anonymous">
+
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+
     <title>{% block title %} Prello  {% endblock %} </title>
     {% block scripts %} {% endblock %}
 </head>
 {% endblock %}
 <body>
-<div id="navbar">
+<nav id="navbar">
     {%  if not session.username %}
     <a href="/login"> Log in </a>
     <a href="/registration"> Register </a>
@@ -20,7 +26,8 @@
     <a href="/logout"> Log out </a>
     <span> You are logged in as {{ session.username }}</span>
     {% endif %}
-</div>
+</nav>
+<h1>Prello</h1>
 {% block content %} {% endblock %}
 </body>
 </html>

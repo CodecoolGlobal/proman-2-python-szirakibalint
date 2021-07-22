@@ -1,16 +1,24 @@
 {% extends 'layout.html' %}
 {% block title %} Log in {% endblock %}
 {%  block content %}
-    <div class="error-message">
-        {% if message != '' %}
-            <p>{{ message }}</p>
-        {% endif %}
+    <div id="form-container">
+        <div class="error-message">
+            {% if message != '' %}
+                <p>{{ message }}</p>
+            {% endif %}
+        </div>
+        <form action="#" class="form" method="post">
+            <p>
+                <label for="username">Username:</label> <br>
+                <input required type="text" name="username" id="username" placeholder="username" autofocus autocomplete="off">
+            </p>
+            <p>
+                <label for="password">Password:</label> <br>
+                <input required type="password" name="password" id="password" placeholder="password">
+            </p>
+            <p>
+                <button type="submit" id="submit">Log in</button>
+            </p>
+        </form>
     </div>
-    <form action="#" class="form" method="post">
-        <label for="username">Username</label>
-        <input required type="text" name="username" id="username" placeholder="username">
-        <label for="password">Password</label>
-        <input required type="password" name="password" id="password" placeholder="password">
-        <button type="submit" id="submit">Log in</button>
-    </form>
 {%  endblock %}

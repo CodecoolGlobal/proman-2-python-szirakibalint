@@ -19,7 +19,9 @@ export function initNewBoardButton () {
         form.innerHTML = htmlFactory.newBoardInput()
         domManager.addEventListener('#submit-new-board-title', 'click', async () => {
             const boardTitle = document.querySelector('#new-board-title').value
-            await dataHandler.createNewBoard(boardTitle)
+            const privateBoard = document.querySelector('#private-checkbox').checked
+            console.log("checkbox value:", privateBoard)
+            await dataHandler.createNewBoard(boardTitle, privateBoard)
             reset()
         })
     })

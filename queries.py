@@ -18,7 +18,7 @@ def get_card_status(status_id):
     return status
 
 
-def get_boards():
+def get_boards(user_id):
     """
     Gather all boards
     :return:
@@ -26,8 +26,9 @@ def get_boards():
     return data_manager.execute_select(
         """
         SELECT * FROM boards
+        WHERE user_id = %(user_id)s OR user_id IS NULL
         ;
-        """
+        """, {'user_id': user_id}
     )
 
 
@@ -56,13 +57,21 @@ def get_statuses_for_board(board_id):
     return matching_statuses
 
 
-def create_new_board(board_name):
-    data_manager.execute_select(
-        """
-        INSERT INTO boards(title)
-        VALUES(%(board_name)s)
-        """
-        , {"board_name": board_name}, select=False)
+def create_new_board(board_name, user_id=None):
+    if user_id:
+        data_manager.execute_select(
+            """
+            INSERT INTO boards(title, user_id)
+            VALUES(%(board_name)s, %(user_id)s)
+            """
+            , {"board_name": board_name, "user_id": user_id}, select=False)
+    else:
+        data_manager.execute_select(
+            """
+            INSERT INTO boards(title)
+            VALUES(%(board_name)s)
+            """
+            , {"board_name": board_name}, select=False)
     for i in range(1, 5):
         data_manager.execute_select(
             """

@@ -12,7 +12,7 @@ export let cardsManager = {
             const content = cardBuilder(card)
 
             domManager.addChild(`.board[data-board-id="${boardId}"] .board-column[data-column-id="${card.status_id}"] .board-column-content`, content)
-            domManager.addEventListener(`.card[data-card-id="${card.id}"]`, "click", deleteButtonHandler)
+            domManager.addEventListener(`.card-remove[data-card-id="${card.id}"]`, "click", deleteButtonHandler)
         }
     },
 }

@@ -34,7 +34,7 @@ export function initRenameButton (boardId) {
     domManager.addEventListener(`#submit-new-board-title-${boardId}`, 'click', async () => {
         const newBoardTitle = document.querySelector(`#new-board-title-${boardId}`).value
         await dataHandler.changeBoardTitle(boardId, newBoardTitle)
-        reset()
+        await reset()
     })
 }
 
@@ -45,7 +45,7 @@ export function initAddNewColumnButton(boardId) {
     domManager.addEventListener(`#submit-new-column-title-${boardId}`, 'click', async () => {
         const newColumnTitle = document.querySelector(`#new-column-title-${boardId}`).value
         await dataHandler.createNewColumn(boardId, newColumnTitle)
-        reset()
+        await reset()
     })
 }
 
@@ -55,18 +55,18 @@ export function initRenameColumnButton(boardId, columnId) {
     domManager.addEventListener(`#submit-new-column-title-${boardId}-${columnId}`,'click', async () => {
         const newColumnTitle = document.querySelector(`#new-column-title-${boardId}-${columnId}`).value
         await dataHandler.changeColumnTitle(boardId, columnId, newColumnTitle)
-        reset()
+        await reset()
     })
 }
 
-export function initDeleteColumnButton(boardId, columnId) {
+export async function initDeleteColumnButton(boardId, columnId) {
     dataHandler.deleteColumn(boardId, columnId).then()
-    reset()
+    await reset()
 }
 
 export async function initDeleteBoardButton(boardId) {
     await dataHandler.deleteBoard(boardId)
-    reset()
+    await reset()
 }
 
 export function initCardForm (boardId) {
@@ -81,7 +81,7 @@ export function initCardForm (boardId) {
         let statusId = firstColumn.dataset.columnId;
         console.log(statusId);
         await dataHandler.createNewCard(newCardTitle, boardId, statusId)
-        reset()
+        await reset()
 } );
 }
 

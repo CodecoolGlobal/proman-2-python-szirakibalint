@@ -12,18 +12,18 @@ export async function updateIsOpen() {
 }
 
 
-function init() {
+async function init() {
   uiManager.initNewBoardDiv()
   uiManager.initNewBoardButton()
-  boardsManager.loadBoards()
+  await boardsManager.loadBoards()
   initDragAndDrop()
 }
 
-export function reset () {
+export async function reset () {
   const root = document.querySelector('#root')
   root.innerHTML = ''
-  init()
+  await init()
 }
 
 await updateIsOpen();
-init();
+await init();

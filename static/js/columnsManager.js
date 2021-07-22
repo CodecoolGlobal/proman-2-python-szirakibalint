@@ -23,8 +23,8 @@ function renameColumn(clickEvent) {
     uiManager.initRenameColumnButton(boardId, columnId)
 }
 
-function deleteColumn(clickEvent) {
+async function deleteColumn(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId
     const columnId = clickEvent.target.dataset.columnId
-    uiManager.initDeleteColumnButton(boardId, columnId)
+    await uiManager.initDeleteColumnButton(boardId, columnId)
 }

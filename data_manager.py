@@ -42,15 +42,7 @@ def get_connection_data(db_name=None):
     }
 
 
-def execute_select(statement, variables=None, fetchall=True, select=True):
-    """
-    Execute SELECT statement optionally parameterized.
-    Use fetchall=False to get back one value (fetchone)
-
-    Example:
-    > execute_select('SELECT %(title)s; FROM shows', variables={'title': 'Codecool'})
-    statement: SELECT statement
-    variables:  optional parameter dict, optional parameter fetchall"""
+def execute_statement(statement, variables=None, fetchall=True, select=True):
     result_set = []
     with establish_connection() as conn:
         with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cursor:
@@ -58,4 +50,3 @@ def execute_select(statement, variables=None, fetchall=True, select=True):
             if select:
                 result_set = cursor.fetchall() if fetchall else cursor.fetchone()
     return result_set
-

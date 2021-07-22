@@ -6,13 +6,13 @@ export function initDragAndDrop() {
         dragged = event.target;
     }, false);
 
-    document.addEventListener("drop", function (event) {
+    document.addEventListener("drop", async function (event) {
         event.preventDefault();
         if (event.target.getAttribute("class") === "board-column-content" && event.target.getAttribute("data-board-id") === dragged.parentNode.getAttribute("data-board-id")) {
             const cardId = parseInt(dragged.getAttribute("data-card-id"))
             const statusId = parseInt(event.target.getAttribute("data-column-id"))
             const boardId = parseInt(event.target.getAttribute("data-board-id"))
-            dataHandler.updateCard(cardId, statusId, boardId)
+            await dataHandler.updateCard(cardId, statusId, boardId)
             dragged.parentNode.removeChild(dragged);
             event.target.appendChild(dragged);
         }

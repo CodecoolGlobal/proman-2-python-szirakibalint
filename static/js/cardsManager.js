@@ -4,7 +4,6 @@ import { domManager } from "./domManager.js";
 import {reset} from "./main.js";
 
 export let cardsManager = {
-
     loadCards: async function (boardId) {
         const cards = await dataHandler.getCardsByBoardId(boardId);
         for (let card of cards) {
@@ -20,6 +19,6 @@ export let cardsManager = {
 async function deleteButtonHandler(clickEvent) {
     const cardId = clickEvent.currentTarget.dataset.cardId;
     await dataHandler.deleteCard(cardId);
-    reset();
+    await reset();
 }
 

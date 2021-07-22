@@ -2,7 +2,6 @@ import { dataHandler } from "./dataHandler.js";
 import { htmlFactory, htmlTemplates } from "./htmlFactory.js";
 import { domManager } from "./domManager.js";
 import { cardsManager } from "./cardsManager.js";
-import {initCardForm, initRenameButton} from "./uiManager.js";
 import {columnsManager} from "./columnsManager.js";
 import * as uiManager from "./uiManager.js";
 
@@ -73,9 +72,9 @@ function addNewColumn(clickEvent) {
 
 
 
-function deleteBoard(clickEvent) {
+async function deleteBoard(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId
-    uiManager.initDeleteBoardButton(boardId)
+    await uiManager.initDeleteBoardButton(boardId)
 }
 
 async function addCard(clickEvent) {
@@ -87,5 +86,5 @@ async function addCard(clickEvent) {
         isOpen[boardId] = true;
         localStorage.setItem("isOpen", JSON.stringify(isOpen));
     }
-    initCardForm(boardId);
+    uiManager.initCardForm(boardId);
 }

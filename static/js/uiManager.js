@@ -2,8 +2,6 @@ import * as htmlFactory from "./htmlFactory.js";
 import {domManager} from "./domManager.js";
 import {dataHandler} from "./dataHandler.js";
 import { reset, updateIsOpen } from "./main.js";
-import {columnsManager} from "./columnsManager.js";
-import {cardsManager} from "./cardsManager.js";
 
 export function initNewBoardDiv () {
     domManager.addChild("#root", `<div id="new-board-form"></div>`)
@@ -23,7 +21,7 @@ export function initNewBoardButton () {
             console.log("checkbox value:", privateBoard)
             await dataHandler.createNewBoard(boardTitle, privateBoard)
             await updateIsOpen();
-            reset()
+            await reset()
         })
     })
 }
@@ -72,9 +70,8 @@ export async function initDeleteBoardButton(boardId) {
 export function initCardForm (boardId) {
     const span = document.querySelector(`#add-new-card-${boardId}`)
     span.innerHTML = htmlFactory.newCardInput(boardId);
-    domManager.addEventListener(`#submit-new-card-${boardId}`, 'click', async (clickEvent) =>
+    domManager.addEventListener(`#submit-new-card-${boardId}`, 'click', async () =>
     {
-
         const newCardTitle = document.querySelector(`#new-card-title-${boardId}`).value
         const firstColumn = document.querySelector(`.board[data-board-id="${boardId}"] .board-column`)
         console.log(firstColumn)

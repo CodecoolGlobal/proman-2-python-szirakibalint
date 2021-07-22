@@ -27,8 +27,8 @@ export let dataHandler = {
         await apiPost('/boards', payload)
     },
     changeBoardTitle: async function (boardId, newBoardTitle) {
-        const payload = {"board_id": boardId, "new_title": newBoardTitle}
-        await apiPut('/boards', payload)
+        const payload = {"new_title": newBoardTitle}
+        await apiPut(`/boards/${boardId}`, payload)
     },
     createNewColumn: async function (boardId, columnTitle) {
         const payload = {"board_id": boardId, "column_title": columnTitle}
@@ -39,12 +39,11 @@ export let dataHandler = {
         await apiPut('/columns', payload)
     },
     deleteColumn: async function (boardId, columnId) {
-        const payload = {"board_id": boardId, "column_id": columnId}
+        const payload = {"board_id": boardId, "column_id": columnId} //?
         await apiDelete('/columns', payload)
     },
     deleteBoard: async function (boardId) {
-        const payload = {"board_id": boardId}
-        await apiDelete('/boards', payload)
+        await apiDelete(`/boards/${boardId}`)
     },
     createNewCard: async function (cardTitle, boardId, statusId) {
         // creates new card, saves it and calls the callback function with its data

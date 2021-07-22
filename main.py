@@ -15,23 +15,27 @@ def index():
     return render_template('index.html')
 
 
-@app.route("/boards", methods=['POST', 'PUT', 'DELETE'])
+@app.route("/boards", methods=['POST'])
 def boards():
-    if request.method == 'POST':
-        board_name = request.get_json()["board_title"]
-        queries.create_new_board(board_name)
-    elif request.method == 'PUT':
-        request_json = request.get_json()
-        board_id = request_json["board_id"]
-        new_board_name = request_json["new_title"]
-        queries.update_board_name(board_id, new_board_name)
-    elif request.method == 'DELETE':
-        request_json = request.get_json()
-        board_id = request_json["board_id"]
-        status_ids = queries.delete_board(board_id)
-        for status_id in status_ids:
-            if not queries.check_status_id(status_id["status_id"]):
-                queries.delete_status(status_id["status_id"])
+    board_name = request.get_json()["board_title"]
+    queries.create_new_board(board_name)
+    return redirect('/')
+
+
+@app.route("/boards/<board_id>", methods=['DELETE'])
+def delete_board(board_id):
+    status_ids = queries.delete_board(board_id)
+    for status_id in status_ids:
+        if not queries.check_status_id(status_id["status_id"]):
+            queries.delete_status(status_id["status_id"])
+    return redirect('/')
+
+
+@app.route("/boards/<board_id>", methods=['PUT'])
+def update_board(board_id):
+    request_json = request.get_json()
+    new_board_name = request_json["new_title"]
+    queries.update_board_name(board_id, new_board_name)
     return redirect('/')
 
 

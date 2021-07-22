@@ -59,7 +59,15 @@ function cardBuilder(card) {
 
 export function newBoardInput(boardId = "") {
     boardId = boardId ? `-${boardId}` : ""
-    return `<input type="text" placeholder="Enter new board title" id="new-board-title${boardId}" required autofocus autocomplete="off"><button id="submit-new-board-title${boardId}">Save</button>`
+    return `<input type="text" 
+                    placeholder="Enter new board title" 
+                    id="new-board-title${boardId}" 
+                    required 
+                    autofocus 
+                    autocomplete="off">
+            <input type="checkbox" value="true" id="private-checkbox${boardId}">
+            <label for="private-checkbox${boardId}">Private</label>
+           <button id="submit-new-board-title${boardId}">Save</button>`
 }
 
 export function newBoardButton() {

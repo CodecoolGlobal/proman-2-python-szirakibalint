@@ -16,9 +16,11 @@ def index():
 
 
 @app.route("/boards", methods=['POST'])
-def boards():
+def create_board():
     board_name = request.get_json()["board_title"]
-    queries.create_new_board(board_name)
+    private = request.get_json()["private"]
+    user_id = session.get("id", None) if private else None
+    queries.create_new_board(board_name, user_id)
     return redirect('/')
 
 
@@ -71,10 +73,8 @@ def delete_column(board_id, status_id):
 @app.route("/get-boards")
 @json_response
 def get_boards():
-    """
-    All the boards
-    """
-    return queries.get_boards()
+    user_id = session.get("id", None)
+    return queries.get_boards(user_id)
 
 
 @app.route("/get-cards/<int:board_id>")
@@ -118,6 +118,7 @@ def login():
         if user:
             if check_pw(password, user['password']):
                 session['username'] = username
+                session['id'] = user['id']
                 return redirect(url_for('index'))
         message = 'Invalid username or password'
 

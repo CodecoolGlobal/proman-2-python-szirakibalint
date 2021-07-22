@@ -61,8 +61,8 @@ export function initDeleteColumnButton(boardId, columnId) {
     reset()
 }
 
-export function initDeleteBoardButton(boardId) {
-    dataHandler.deleteBoard(boardId).then()
+export async function initDeleteBoardButton(boardId) {
+    await dataHandler.deleteBoard(boardId)
     reset()
 }
 

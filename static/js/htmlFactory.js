@@ -26,15 +26,9 @@ function boardBuilder(board) {
                     <span class="board-title" >${board.title}</span>
                     <span id="change-board-title-${board.id}"><button class="change-board-title" data-board-id=${board.id}>Change Title</button></span>
                     <span id="add-new-column-${board.id}"><button class="add-new-column" data-board-id=${board.id}>Add new column</button></span>
-
                     <span id="delete-board-${board.id}"><button class="delete-board" data-board-id=${board.id}>Delete board</button></span>
-
                     <span id="add-new-card-${board.id}"><button class="board-add" data-board-id=${board.id}>Add card</button></span>
-                    <button class="board-toggle" data-toggle-state="hide" data-board-id="${board.id}">
-
-                        Show Cards
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
+                    <button class="board-toggle" data-toggle-state="hide" data-board-id="${board.id}">Show Cards <i class="fas fa-chevron-down"></i></button>
                 </div>
                 <div class="board-columns"></div>
             </section>`
@@ -43,8 +37,10 @@ function boardBuilder(board) {
 
 function columnBuilder(column, boardId) {
     return `<div class="board-column" data-column-id="${column.id}" data-board-id="${boardId}">
-                <span id="change-column-title-${boardId}-${column.id}"><button id="change-column-title-button-${boardId}-${column.id}" data-board-id=${boardId} data-column-id=${column.id}>Change Title</button></span>
-                <span id="delete-column-${boardId}-${column.id}"><button id="delete-column-button-${boardId}-${column.id}" data-board-id=${boardId} data-column-id=${column.id}>Delete column</button></span>
+                <span class="column-buttons">
+                    <span id="change-column-title-${boardId}-${column.id}"><button id="change-column-title-button-${boardId}-${column.id}" data-board-id=${boardId} data-column-id=${column.id}>Change Title</button></span>
+                    <span id="delete-column-${boardId}-${column.id}"><button id="delete-column-button-${boardId}-${column.id}" data-board-id=${boardId} data-column-id=${column.id}>Delete column</button></span>
+                </span>
                 <div class="board-column-title"> ${column.title} </div>
                 <div class="board-column-content" data-column-id="${column.id}" data-board-id="${boardId}"></div>
              </div>`;

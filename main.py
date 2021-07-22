@@ -7,6 +7,11 @@ app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 
+@app.before_first_request
+def before_first_request():
+    session.clear()
+
+
 @app.route("/", methods=['GET', 'POST', 'PUT', 'DELETE'])
 def index():
     """

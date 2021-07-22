@@ -20,30 +20,45 @@ export let boardsManager = {
             domManager.addChild(".board-container", content)
             domManager.addEventListener(`.board-toggle[data-board-id="${board.id}"]`, "click", showHideButtonHandler)
             domManager.addEventListener(`.change-board-title[data-board-id="${board.id}"]`, "click", renameTable)
-
             domManager.addEventListener(`.add-new-column[data-board-id="${board.id}"]`, "click", addNewColumn)
             domManager.addEventListener(`.delete-board[data-board-id="${board.id}"]`, "click", deleteBoard)
-
             domManager.addEventListener(`.board-add[data-board-id="${board.id}"]`, "click", addCard)
-
+            const isOpen = JSON.parse(localStorage.getItem("isOpen"));
+            if (isOpen[board.id]){
+                const button = document.querySelector(`.board-toggle[data-board-id="${board.id}"]`)
+                await openBoard(board.id, button);
+            }
         }
     },
 }
+async function openBoard(boardId, button){
+    await columnsManager.loadColumns(boardId);
+    await cardsManager.loadCards(boardId);
+    button.dataset.toggleState = "show";
+    button.innerHTML= ` Hide cards <i class=\"fas fa-chevron-up\"></i> `;
+}
+
+async function closeBoard(boardId, button){
+    const columnContent = document.querySelector(`.board[data-board-id="${boardId}"] .board-columns`)
+    columnContent.innerHTML = '';
+    button.dataset.toggleState = "hide";
+    button.innerHTML= ` Show cards <i class=\"fas fa-chevron-down\"></i> `;
+}
+
 
 async function showHideButtonHandler(clickEvent) {
     const button = clickEvent.target;
-    const boardId = button.dataset.boardId
-    if (button.dataset.toggleState === "hide") {
-        await columnsManager.loadColumns(boardId)
-        await cardsManager.loadCards(boardId)
-        button.dataset.toggleState = "show";
-        button.innerHTML= ` Hide cards <i class=\"fas fa-chevron-up\"></i> `
+    const boardId = button.dataset.boardId;
+    const isOpen = JSON.parse(localStorage.getItem("isOpen"));
+    if (isOpen[boardId] === false) {
+        await openBoard(boardId, button)
+        isOpen[boardId] = true;
     } else {
-        const columnContent = document.querySelector(`.board[data-board-id="${boardId}"] .board-columns`)
-        columnContent.innerHTML = '';
-        button.dataset.toggleState = "hide";
-        button.innerHTML= ` Show cards <i class=\"fas fa-chevron-down\"></i> `
+        await closeBoard(boardId, button)
+        isOpen[boardId] = false;
     }
+    localStorage.setItem("isOpen", JSON.stringify(isOpen));
+    console.log(localStorage.getItem("isOpen"));
 }
 
 function renameTable(clickEvent) {
@@ -65,14 +80,12 @@ function deleteBoard(clickEvent) {
 
 async function addCard(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;
-
     const button = document.querySelector(`.board[data-board-id="${boardId}"] .board-toggle`);
-    console.log(button);
     if (button.dataset.toggleState === "hide") {
-        await columnsManager.loadColumns(boardId)
-        await cardsManager.loadCards(boardId)
-        button.dataset.toggleState = "show";
-        button.innerHTML= ` Hide cards <i class=\"fas fa-chevron-up\"></i> `
+        await openBoard(boardId, button);
+        const isOpen = JSON.parse(localStorage.getItem("isOpen"));
+        isOpen[boardId] = true;
+        localStorage.setItem("isOpen", JSON.stringify(isOpen));
     }
     initCardForm(boardId);
 }

@@ -39,30 +39,32 @@ def update_board(board_id):
     return redirect('/')
 
 
-@app.route("/columns", methods=['POST', 'PUT', 'DELETE'])
+@app.route("/columns", methods=['POST'])
 def columns():
-    if request.method == 'POST':
-        column_name = request.get_json()["column_title"]
-        board_id = request.get_json()["board_id"]
-        status_id = queries.get_status_id(column_name)
-        queries.create_new_column(board_id, status_id)
-    elif request.method == 'PUT':
-        request_json = request.get_json()
-        board_id = request_json["board_id"]
-        column_id_old = request_json["column_id"]
-        column_title = request_json["column_title"]
-        column_id_new = queries.get_status_id(column_title)
-        queries.update_column(board_id, column_id_old, column_id_new)
-        if not queries.check_status_id(column_id_old):
-            queries.delete_status(column_id_old)
-    elif request.method == 'DELETE':
-        request_json = request.get_json()
-        board_id = request_json["board_id"]
-        column_id = request_json["column_id"]
-        queries.delete_column(board_id, column_id)
-        queries.delete_cards_by_column(board_id, column_id)
-        if not queries.check_status_id(column_id):
-            queries.delete_status(column_id)
+    column_name = request.get_json()["column_title"]
+    board_id = request.get_json()["board_id"]
+    status_id = queries.get_status_id(column_name)
+    queries.create_new_column(board_id, status_id)
+    return redirect('/')
+
+
+@app.route("/columns/<board_id>/<status_id>", methods=['PUT'])
+def update_column(board_id, status_id):
+    request_json = request.get_json()
+    column_title = request_json["column_title"]
+    status_id_new = queries.get_status_id(column_title)
+    queries.update_column(board_id, status_id, status_id_new)
+    if not queries.check_status_id(status_id):
+        queries.delete_status(status_id)
+    return redirect('/')
+
+
+@app.route("/columns/<board_id>/<status_id>", methods=['DELETE'])
+def delete_column(board_id, status_id):
+    queries.delete_column(board_id, status_id)
+    queries.delete_cards_by_column(board_id, status_id)
+    if not queries.check_status_id(status_id):
+        queries.delete_status(status_id)
     return redirect('/')
 
 

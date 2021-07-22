@@ -35,12 +35,11 @@ export let dataHandler = {
         await apiPost('/columns', payload)
     },
     changeColumnTitle: async function (boardId, columnId, columnTitle) {
-        const payload = {"board_id": boardId, "column_id": columnId, "column_title": columnTitle}
-        await apiPut('/columns', payload)
+        const payload = {"column_title": columnTitle}
+        await apiPut(`/columns/${boardId}/${columnId}`, payload)
     },
     deleteColumn: async function (boardId, columnId) {
-        const payload = {"board_id": boardId, "column_id": columnId} //?
-        await apiDelete('/columns', payload)
+        await apiDelete(`/columns/${boardId}/${columnId}`)
     },
     deleteBoard: async function (boardId) {
         await apiDelete(`/boards/${boardId}`)

@@ -18,7 +18,8 @@ def index():
 @app.route("/boards", methods=['POST'])
 def create_board():
     board_name = request.get_json()["board_title"]
-    user_id = session.get("id")
+    private = request.get_json()["private"]
+    user_id = session.get("id", None) if private else None
     queries.create_new_board(board_name, user_id)
     return redirect('/')
 

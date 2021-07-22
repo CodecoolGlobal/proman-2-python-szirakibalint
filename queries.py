@@ -282,3 +282,18 @@ def check_if_column_exists(board_id, status_id):
         , {"status_id": status_id, "board_id": board_id}, fetchall=False)
     exists = dict(exists)["exists"]
     return exists
+
+
+def update_card_status(card_id, status_id, board_id):
+    data_manager.execute_select(
+        """
+        UPDATE cards
+        SET status_id = %(status)s, 
+            card_order = COALESCE(
+                        (SELECT MAX(CARD_ORDER) 
+                            FROM cards 
+                            WHERE STATUS_ID=%(status)s AND BOARD_ID=%(board)s),
+                            0) + 1
+        WHERE id = %(card)s
+        """
+        , {"status": status_id, "card": card_id, "board": board_id}, select=False)

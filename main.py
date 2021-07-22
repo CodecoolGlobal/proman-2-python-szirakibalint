@@ -130,10 +130,19 @@ def delete_card(card_id):
     return "ok"
 
 
+@app.route('/cards/<card_id>', methods=['PUT'])
+def update_card(card_id):
+    status_id = request.get_json()["status_id"]
+    board_id = request.get_json()["board_id"]
+    queries.update_card_status(card_id, status_id, board_id)
+    return "ok"
+
+
 @app.route('/cards', methods=['POST'])
 def create_card():
-    card = request.get_json()
-    queries.create_card(card)
+    if request.method == 'POST':
+        card = request.get_json()
+        queries.create_card(card)
     return "ok"
 
 

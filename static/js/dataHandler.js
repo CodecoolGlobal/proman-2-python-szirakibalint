@@ -54,6 +54,10 @@ export let dataHandler = {
 
     deleteCard: async function (cardId) {
         await apiDelete(`cards/${cardId}`);
+    },
+    updateCard: async function (cardId, statusId, boardId) {
+        const payload = {"status_id": statusId, "board_id": boardId}
+        await apiPut(`cards/${cardId}`, payload)
     }
 };
 
@@ -90,7 +94,7 @@ async function apiDelete(url, payload="") {
 }
 
 
-async function apiPut(url, payload) {
+async function apiPut(url, payload="") {
     await fetch(url, {
         headers: {
             'Accept': 'application/json',

@@ -1,7 +1,7 @@
 import * as htmlFactory from "./htmlFactory.js";
 import {domManager} from "./domManager.js";
 import {dataHandler} from "./dataHandler.js";
-import { reset } from "./main.js";
+import { reset, updateIsOpen } from "./main.js";
 import {columnsManager} from "./columnsManager.js";
 import {cardsManager} from "./cardsManager.js";
 
@@ -22,6 +22,7 @@ export function initNewBoardButton () {
             const privateBoard = document.querySelector('#private-checkbox').checked
             console.log("checkbox value:", privateBoard)
             await dataHandler.createNewBoard(boardTitle, privateBoard)
+            await updateIsOpen();
             reset()
         })
     })

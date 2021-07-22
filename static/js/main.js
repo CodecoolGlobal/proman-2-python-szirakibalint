@@ -3,12 +3,10 @@ import * as uiManager from "./uiManager.js"
 import {initDragAndDrop} from "./dragAndDrop.js"
 import {dataHandler} from "./dataHandler.js"
 
-async function realInit() {
+export async function updateIsOpen() {
   const boards = await dataHandler.getBoards();
   const boardIds = boards.map(board => board.id);
-
   const isOpen = JSON.parse(localStorage.getItem("isOpen")) ? JSON.parse(localStorage.getItem("isOpen")) : {};
-
   boardIds.forEach(id => isOpen[id] = isOpen[id] ? isOpen[id] : false);
   localStorage.setItem("isOpen", JSON.stringify(isOpen));
 }
@@ -27,5 +25,5 @@ export function reset () {
   init()
 }
 
-await realInit();
+await updateIsOpen();
 init();

@@ -49,7 +49,6 @@ def columns():
         column_title = request_json["column_title"]
         column_id_new = queries.get_status_id(column_title)
         queries.update_column(board_id, column_id_old, column_id_new)
-        queries.update_cards_by_column_change(board_id, column_id_old, column_id_new)
         if not queries.check_status_id(column_id_old):
             queries.delete_status(column_id_old)
     elif request.method == 'DELETE':

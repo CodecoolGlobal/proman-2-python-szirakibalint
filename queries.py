@@ -181,12 +181,13 @@ def check_status_id(status_id):
 
 
 def delete_status(status_id):
-    data_manager.execute_statement(
-        """
-        DELETE from statuses
-        WHERE id = %(status)s
-        """,
-        {"status": status_id}, select=False)
+    if int(status_id) > 4:
+        data_manager.execute_statement(
+            """
+            DELETE from statuses
+            WHERE id = %(status)s
+            """,
+            {"status": status_id}, select=False)
 
 
 def delete_column(board_id, status_id):

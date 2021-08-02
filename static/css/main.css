@@ -1,3 +1,236 @@
-#boards {
-    background-color: green;
+:root{
+    --border-radius: 3px;
+    --status-1: red;
+    --status-2: orange;
+    --status-3: goldenrod;
+    --status-4: green;
+}
+
+body{
+    min-width: 620px;
+    background: rgb(132,80,255);
+    background: -moz-linear-gradient(90deg, rgba(132,80,255,1) 0%, rgba(173,161,253,1) 100%);
+    background: -webkit-linear-gradient(90deg, rgba(132,80,255,1) 0%, rgba(173,161,253,1) 100%);
+    background: linear-gradient(90deg, rgba(132,80,255,1) 0%, rgba(173,161,253,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#8450ff",endColorstr="#ada1fd",GradientType=1);
+    font-family: 'Inter', sans-serif;
+}
+
+h1, .board-title, .board-column-title{
+    font-weight: bold;
+}
+
+/*button, #navbar a{*/
+/*    background: #222;*/
+/*    color: #fff;*/
+/*    border: none;*/
+/*    font-size: 14px;*/
+/*    font-family: sans-serif;*/
+/*    padding: 6px 10px;*/
+/*    border-radius: 4px;*/
+/*}*/
+
+.board-container{
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+section.board{
+    margin: 20px;
+    border: aliceblue;
+    background: #ffffff90;
+    border-radius: 3px;
+}
+
+.board-header{
+    height: 60px;
+    background: #fff;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+    display: flex;
+    align-items: center;
+}
+
+.board-title{
+    margin: 13px;
+    display: inline-block;
+    font-size: 20px;
+}
+.board-title, .board-add, .board-toggle{
+    display: inline-block;
+}
+
+.board-toggle{
+    margin-left: auto;
+}
+
+.board-columns{
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.board-column{
+    padding: 10px;
+    flex: 1;
+}
+
+.board-column-content{
+    border: 2px solid #cdcdcd;
+    margin-top: 4px;
+    border-radius: 10px;
+    padding: 10px 10px 40px;
+    background: #eee;
+}
+
+.board-column-title{
+    text-align: center;
+    font-size: large;
+    margin-top: 0.75rem;
+}
+
+.card{
+    position: relative;
+    background: #222;
+    color: #fff;
+    border-radius: var(--border-radius);
+    margin: 4px 0;
+    padding: 8px;
+    display: flex;
+    align-content: center;
+}
+
+.board-column:nth-of-type(1) .card{
+    background: var(--status-1);
+}
+
+.board-column:nth-of-type(2) .card{
+    background: var(--status-2);
+}
+
+.board-column:nth-of-type(3) .card{
+    background: var(--status-3);
+}
+
+.board-column:nth-of-type(4) .card{
+    background: var(--status-4);
+}
+
+.card-remove{
+    display: block;
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.card-title{
+    padding-right: 16px;
+}
+
+#new-board-form {
+    display: flex;
+    justify-content: center;
+}
+
+#load-new-board-form {
+    background: transparent;
+    color: #fff;
+    border: 3px solid white;
+    border-radius: 40px;
+    font-size: large;
+    font-family: sans-serif;
+    font-weight: bold;
+    padding: 12px 20px;
+}
+
+.board-header button {
+    background: #6F52FE;
+    color: #fff;
+    border: none;
+    font-size: 14px;
+    font-family: sans-serif;
+    font-weight: bold;
+    padding: 8px 10px;
+    border-radius: 12px;
+    margin-right: 1rem;
+}
+
+.board-column button {
+    background: #6F52FE;
+    color: #fff;
+    border: none;
+    font-size: 12px;
+    font-family: sans-serif;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 6px;
+}
+
+.column-buttons {
+    display: flex;
+    margin-top: 0.5rem;
+    justify-content: space-evenly;
+}
+
+#navbar {
+    display: flex;
+    height: max-content;
+}
+
+#navbar-buttons {
+    display: flex;
+    margin-left: auto;
+    align-items: center;
+    justify-content: center;
+}
+
+#navbar a {
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#navbar * {
+    color: white;
+}
+
+#navbar-buttons * {
+    margin-top: 0.75rem;
+    margin-right: 2rem;
+}
+
+#logo {
+    margin-top: 0.5rem;
+    display: flex;
+    height: 40px;
+    padding: 0.5rem 2rem;
+}
+
+#new-board-form {
+    margin-top: 0.5rem;
+    margin-bottom: 2.5rem;
+}
+
+#form-container {
+    display: flex;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+}
+
+#form-container button {
+    background: #fff;
+    color: #6F52FE;
+    border: none;
+    font-size: 12px;
+    font-family: sans-serif;
+    font-weight: bold;
+    padding: 6px 10px;
+    border-radius: 6px;
+    width: 100%;
+}
+
+#form-container input {
+    border: none;
+    border-radius: 6px;
+    padding: 4px;
 }

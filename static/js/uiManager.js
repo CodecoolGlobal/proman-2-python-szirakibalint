@@ -47,16 +47,6 @@ export function initAddNewColumnButton(boardId) {
     })
 }
 
-export function initRenameColumnButton(boardId, columnId) {
-    const buttonSpan = document.querySelector(`#change-column-title-${boardId}-${columnId}`)
-    buttonSpan.innerHTML = htmlFactory.newColumnInput(boardId, columnId)
-    domManager.addEventListener(`#submit-new-column-title-${boardId}-${columnId}`,'click', async () => {
-        const newColumnTitle = document.querySelector(`#new-column-title-${boardId}-${columnId}`).value
-        await dataHandler.changeColumnTitle(boardId, columnId, newColumnTitle)
-        await reset()
-    })
-}
-
 export async function initDeleteColumnButton(boardId, columnId) {
     dataHandler.deleteColumn(boardId, columnId).then()
     await reset()

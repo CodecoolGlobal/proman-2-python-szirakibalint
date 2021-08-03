@@ -305,3 +305,12 @@ def update_card_status(card_id, status_id, board_id):
         WHERE id = %(card)s
         """,
         {"status": status_id, "card": card_id, "board": board_id}, select=False)
+
+
+def update_card_title(card_id, updated_title):
+    query = '''
+            UPDATE cards
+            SET title = %(updated_title)s
+            WHERE id = %(card_id)s
+            '''
+    return data_manager.execute_statement(query, {'updated_title': updated_title, 'card_id': card_id}, select=False)

@@ -144,9 +144,14 @@ def delete_card(card_id):
 
 @app.route('/cards/<card_id>', methods=['PUT'])
 def update_card(card_id):
-    status_id = request.get_json()["status_id"]
-    board_id = request.get_json()["board_id"]
-    queries.update_card_status(card_id, status_id, board_id)
+    request_json = request.get_json()
+    if 'updated_title' in request_json.keys():
+        updated_title = request_json['updated_title']
+        queries.update_card_title(card_id, updated_title)
+    else:
+        status_id = request_json["status_id"]
+        board_id = request_json["board_id"]
+        queries.update_card_status(card_id, status_id, board_id)
     return "ok"
 
 

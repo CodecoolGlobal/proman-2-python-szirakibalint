@@ -57,7 +57,6 @@ async function showHideButtonHandler(clickEvent) {
         isOpen[boardId] = false;
     }
     localStorage.setItem("isOpen", JSON.stringify(isOpen));
-    console.log(localStorage.getItem("isOpen"));
 }
 
 function renameTable(clickEvent) {

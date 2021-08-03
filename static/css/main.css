@@ -69,11 +69,20 @@ section.board{
 }
 
 .board-column{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
     padding: 10px;
     flex: 1;
 }
 
+.board-column-header {
+    display: flex;
+    width: 80%;
+}
+
 .board-column-content{
+    width: 80%;
     border: 2px solid #cdcdcd;
     margin-top: 4px;
     border-radius: 10px;
@@ -82,12 +91,24 @@ section.board{
 }
 
 .board-column-title{
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    min-width: 4rem;
+    max-width: 10rem;
     font-size: large;
-    margin-top: 0.75rem;
+    min-height: 2rem;
 }
 
-.card{
+.delete-column {
+    width: max-content;
+    height: max-content;
+    display: flex;
+    margin-left: auto;
+}
+
+.card {
     position: relative;
     background: #222;
     color: #fff;

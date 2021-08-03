@@ -26,7 +26,7 @@ async function cardTitleChangeHandler (e) {
         const boardId = parseInt(column.parentElement.getAttribute('data-board-id'))
         const cardId = parseInt(card.getAttribute('data-card-id'))
         const statusId = parseInt(column.getAttribute('data-column-id'))
-        const updatedTitle = card.innerText.replaceAll('\n', '')
+        const updatedTitle = card.innerText.replaceAll('\n', '').slice(0, 15)
         await dataHandler.updateCard(cardId, statusId, boardId, updatedTitle)
         await reset()
     }

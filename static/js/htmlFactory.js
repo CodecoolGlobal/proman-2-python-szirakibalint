@@ -21,7 +21,9 @@ export function htmlFactory(template) {
 }
 
 function boardBuilder(board) {
-    return `<section class="board" data-board-id=${board.id}>
+    if (board.id !== 0) {
+        console.log(board)
+        return `<section class="board" data-board-id=${board.id}>
                 <div class="board-header">
                     <span class="board-title" >${board.title}</span>
                     <span id="change-board-title-${board.id}"><button class="change-board-title" data-board-id=${board.id}>Change Title</button></span>
@@ -32,11 +34,22 @@ function boardBuilder(board) {
                 </div>
                 <div class="board-columns"></div>
             </section>`
+    } else {
+        console.log(board)
+        return `<section class="board" data-board-id=${board.id}>
+                <div class="board-header">
+                    <span class="board-title" >${board.title}</span>
+                    <button class="board-toggle" data-toggle-state="hide" data-board-id="${board.id}">Show Cards <i class="fas fa-chevron-down"></i></button>
+                </div>
+                <div class="board-columns"></div>
+            </section>`
+    }
 }
 
 
 function columnBuilder(column, boardId) {
-    return `<div class="board-column" data-column-id="${column.id}" data-board-id="${boardId}">
+    if (boardId !== 0) {
+        return `<div class="board-column" data-column-id="${column.id}" data-board-id="${boardId}">
                 <span class="column-buttons">
                     <span id="change-column-title-${boardId}-${column.id}"><button id="change-column-title-button-${boardId}-${column.id}" data-board-id=${boardId} data-column-id=${column.id}>Change Title</button></span>
                     <span id="delete-column-${boardId}-${column.id}"><button id="delete-column-button-${boardId}-${column.id}" data-board-id=${boardId} data-column-id=${column.id}>Delete column</button></span>
@@ -44,10 +57,17 @@ function columnBuilder(column, boardId) {
                 <div class="board-column-title"> ${column.title} </div>
                 <div class="board-column-content" data-column-id="${column.id}" data-board-id="${boardId}"></div>
              </div>`;
+    } else {
+        return `<div class="board-column" data-column-id="${column.id}" data-board-id="${boardId}">
+                <div class="board-column-title"> ${column.title} </div>
+                <div class="board-column-content" data-column-id="${column.id}" data-board-id="${boardId}"></div>
+             </div>`;
+    }
 }
 
 function cardBuilder(card) {
     return `<div class="card" data-card-id="${card.id}" draggable="true">
+                <div class="card-archive" data-card-id="${card.id}"><i class="fas fa-archive"></i></div>
                 <div class="card-remove" data-card-id="${card.id}"><i class="fas fa-trash-alt"></i></div>
                 <div class="card-title">${card.title}</div>
             </div>`;

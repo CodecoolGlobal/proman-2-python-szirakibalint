@@ -5,14 +5,17 @@ import * as uiManager from "./uiManager.js";
 
 export let columnsManager = {
     loadColumns: async function (boardId) {
+        boardId = parseInt(boardId)
         const columns = await dataHandler.getStatuses(boardId);
         for (let column of columns) {
 
             const columnBuilder = htmlFactory(htmlTemplates.column);
             const content = columnBuilder(column, boardId);
             domManager.addChild(`.board[data-board-id="${boardId}"] .board-columns`, content);
-            domManager.addEventListener(`#change-column-title-button-${boardId}-${column.id}`, "click", renameColumn)
-            domManager.addEventListener(`#delete-column-button-${boardId}-${column.id}`, "click", deleteColumn)
+            if (boardId !== 0) {
+                domManager.addEventListener(`#change-column-title-button-${boardId}-${column.id}`, "click", renameColumn)
+                domManager.addEventListener(`#delete-column-button-${boardId}-${column.id}`, "click", deleteColumn)
+            }
         }
     }
 }

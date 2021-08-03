@@ -28,8 +28,23 @@ export let boardsManager = {
                 await openBoard(board.id, button);
             }
         }
+        const archiveBoard = await dataHandler.getBoard(0)
+        await loadArchiveBoard(archiveBoard)
     },
 }
+
+async function loadArchiveBoard(archiveBoard){
+    const boardBuilder = htmlFactory(htmlTemplates.board);
+    const content = boardBuilder(archiveBoard)
+    domManager.addChild(".board-container", content)
+    domManager.addEventListener(`.board-toggle[data-board-id="${archiveBoard.id}"]`, "click", showHideButtonHandler)
+    const isOpen = JSON.parse(localStorage.getItem("isOpen"));
+    if (isOpen[archiveBoard.id]){
+        const button = document.querySelector(`.board-toggle[data-board-id="${archiveBoard.id}"]`)
+        await openBoard(archiveBoard.id, button);
+    }
+}
+
 async function openBoard(boardId, button){
     await columnsManager.loadColumns(boardId);
     await cardsManager.loadCards(boardId);

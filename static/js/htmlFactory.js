@@ -37,12 +37,11 @@ function boardBuilder(board) {
 
 function columnBuilder(column, boardId) {
     return `<div class="board-column" data-column-id="${column.id}" data-board-id="${boardId}">
-                <span class="column-buttons">
-                    <span id="change-column-title-${boardId}-${column.id}"><button id="change-column-title-button-${boardId}-${column.id}" data-board-id=${boardId} data-column-id=${column.id}>Change Title</button></span>
-                    <span id="delete-column-${boardId}-${column.id}"><button id="delete-column-button-${boardId}-${column.id}" data-board-id=${boardId} data-column-id=${column.id}>Delete column</button></span>
-                </span>
-                <div class="board-column-title"> ${column.title} </div>
-                <div class="board-column-content" data-column-id="${column.id}" data-board-id="${boardId}"></div>
+                <div class="board-column-header">
+                    <div class="board-column-title" id="board-column-title-${boardId}-${column.id}" data-board-id="${boardId}" data-column-id="${column.id}" contenteditable="true" spellcheck="false">${column.title}</div>
+                    <span class="delete-column" id="delete-column-${boardId}-${column.id}"><button class="delete-column-button" id="delete-column-button-${boardId}-${column.id}" data-board-id=${boardId} data-column-id=${column.id}><i class="fas fa-trash-alt"></i></button></span>
+                </div>
+                    <div class="board-column-content" data-column-id="${column.id}" data-board-id="${boardId}"></div>
              </div>`;
 }
 

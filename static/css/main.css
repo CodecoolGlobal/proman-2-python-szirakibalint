@@ -6,12 +6,21 @@
     --status-4: green;
 }
 
+#root {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 body{
     min-width: 620px;
     background: rgb(132,80,255);
     background: -moz-linear-gradient(90deg, rgba(132,80,255,1) 0%, rgba(173,161,253,1) 100%);
     background: -webkit-linear-gradient(90deg, rgba(132,80,255,1) 0%, rgba(173,161,253,1) 100%);
     background: linear-gradient(90deg, rgba(132,80,255,1) 0%, rgba(173,161,253,1) 100%);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#8450ff",endColorstr="#ada1fd",GradientType=1);
     font-family: 'Inter', sans-serif;
 }
@@ -35,11 +44,12 @@ h1, .board-title, .board-column-title{
     margin: 0 auto;
 }
 
-section.board{
-    margin: 20px;
+section.board {
+    margin-bottom: 1rem;
     border: aliceblue;
     background: #ffffff90;
     border-radius: 3px;
+    width: 60vw;
 }
 
 .board-header{
@@ -79,6 +89,7 @@ section.board{
 .board-column-header {
     display: flex;
     width: 80%;
+    align-items: center;
 }
 
 .board-column-content{
@@ -158,7 +169,16 @@ section.board{
 
 #new-board-form {
     display: flex;
+    align-items: baseline;
     justify-content: center;
+    height: 2rem;
+    width: 35vw;
+    margin-top: 0.5rem;
+    margin-bottom: 3rem;
+}
+
+#new-board-form * {
+    margin: 0.5rem;
 }
 
 #load-new-board-form {
@@ -234,11 +254,6 @@ section.board{
     padding: 0.5rem 2rem;
 }
 
-#new-board-form {
-    margin-top: 0.5rem;
-    margin-bottom: 2.5rem;
-}
-
 #form-container {
     display: flex;
     justify-content: center;
@@ -246,7 +261,7 @@ section.board{
     font-weight: bold;
 }
 
-#form-container button {
+#form-container button, #submit-new-board-title {
     background: #fff;
     color: #6F52FE;
     border: none;
@@ -258,23 +273,20 @@ section.board{
     width: 100%;
 }
 
-#form-container input {
+#submit-new-board-title {
+    width: max-content;
+}
+
+#form-container input, #new-board-form input {
+    outline: none;
     border: none;
     border-radius: 6px;
     padding: 4px;
 }
 
-.modal {
-  display: block;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 50%;
-  height: 50%;
-  overflow: auto;
-  background-color: rgb(0,0,0);
-  background-color: rgba(0,0,0,0.4);
+label[for='private-checkbox'] {
+    font-weight: bold;
+    color: white;
 }
 
 .modal {

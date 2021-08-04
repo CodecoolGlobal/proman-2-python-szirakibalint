@@ -2,7 +2,7 @@ import {dataHandler} from "./dataHandler.js";
 import {htmlFactory, htmlTemplates} from "./htmlFactory.js";
 import {domManager} from "./domManager.js";
 import * as uiManager from "./uiManager.js";
-import {reset} from "./main.js";
+
 
 export let columnsManager = {
     loadColumns: async function (boardId) {
@@ -25,7 +25,7 @@ async function renameColumn(event) {
         if (newColumnTitle) {
             event.target.innerText = newColumnTitle
             await dataHandler.changeColumnTitle(boardId, columnId, newColumnTitle)
-            await reset()
+            event.target.blur()
         }
     }
 }

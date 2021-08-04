@@ -1,7 +1,7 @@
 import { dataHandler } from "./dataHandler.js";
 import { htmlFactory, htmlTemplates } from "./htmlFactory.js";
 import { domManager } from "./domManager.js";
-import {reset} from "./main.js";
+
 
 export let cardsManager = {
     loadCards: async function (boardId) {
@@ -28,13 +28,15 @@ async function cardTitleChangeHandler (e) {
         const statusId = parseInt(column.getAttribute('data-column-id'))
         const updatedTitle = card.innerText.replaceAll('\n', '').slice(0, 15)
         if (updatedTitle) await dataHandler.updateCard(cardId, statusId, boardId, updatedTitle)
-        await reset()
+        e.target.blur()
     }
 }
 
 async function deleteButtonHandler(clickEvent) {
     const cardId = clickEvent.currentTarget.dataset.cardId;
     await dataHandler.deleteCard(cardId);
-    await reset();
+    const card = document.querySelector(`.card[data-card-id="${cardId}"]`)
+    card.parentNode.removeChild(card);
+
 }
 

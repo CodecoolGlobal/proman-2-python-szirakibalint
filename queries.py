@@ -26,6 +26,7 @@ def get_boards(user_id):
         """
         SELECT * FROM boards
         WHERE user_id = %(user_id)s OR user_id IS NULL
+        ORDER BY id
         ;
         """, {'user_id': user_id}
     )
@@ -36,6 +37,7 @@ def get_cards_for_board(board_id):
         """
         SELECT * FROM cards
         WHERE cards.board_id = %(board_id)s
+        ORDER BY id
         ;
         """,
         {"board_id": board_id})
@@ -49,6 +51,7 @@ def get_statuses_for_board(board_id):
         SELECT * FROM boards_statuses
         LEFT JOIN statuses ON boards_statuses.status_id = statuses.id
         WHERE boards_statuses.board_id = %(board_id)s
+        ORDER BY id
         ;
         """,
         {"board_id": board_id})

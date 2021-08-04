@@ -46,7 +46,7 @@ function columnBuilder(column, boardId) {
 }
 
 function cardBuilder(card) {
-    return `<div class="card" data-card-id="${card.id}" draggable="true">
+    return `<div class="card" data-card-id="${card.id}" data-card-order="${card.card_order}" draggable="true">
                 <div class="card-remove" data-card-id="${card.id}"><i class="fas fa-trash-alt"></i></div>
                 <div class="card-title" contenteditable="true" spellcheck="false">${card.title}</div>
             </div>`;

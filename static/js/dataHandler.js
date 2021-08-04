@@ -53,8 +53,8 @@ export let dataHandler = {
         await apiDelete(`cards/${cardId}`);
     },
     updateCard: async function (cardId, statusId, boardId, updatedTitle=null) {
-        const payload = updatedTitle ? {"status_id": statusId, "board_id": boardId, "updated_title": updatedTitle} : {"status_id": statusId, "board_id": boardId}
-        await apiPut(`cards/${cardId}`, payload)
+        const payload = updatedTitle ? {"status_id": statusId, "board_id": boardId, "updated_title": updatedTitle} : {"status_id": statusId, "board_id": boardId};
+        await apiPut(`cards/${cardId}`, payload);
     }
 };
 

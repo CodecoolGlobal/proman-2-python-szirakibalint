@@ -25,9 +25,18 @@ def get_boards(user_id):
     return data_manager.execute_statement(
         """
         SELECT * FROM boards
-        WHERE user_id = %(user_id)s OR user_id IS NULL
+        WHERE (user_id = %(user_id)s OR user_id IS NULL) AND boards.id > 0
         ;
         """, {'user_id': user_id}
+    )
+
+
+def get_board_by_id(board_id):
+    return data_manager.execute_statement(
+        """
+        SELECT * FROM boards
+        WHERE boards.id = %(board_id)s
+        """, {'board_id': board_id}, fetchall=False
     )
 
 
@@ -35,12 +44,18 @@ def get_cards_for_board(board_id):
     matching_cards = data_manager.execute_statement(
         """
         SELECT * FROM cards
-        WHERE cards.board_id = %(board_id)s
-        ;
+        WHERE cards.board_id = %(board_id)s AND cards.archived = false
         """,
         {"board_id": board_id})
 
     return matching_cards
+
+
+def get_archived_cards():
+    return data_manager.execute_statement("""
+    SELECT * FROM cards
+    WHERE cards.archived = true
+    """)
 
 
 def get_statuses_for_board(board_id):
@@ -181,12 +196,13 @@ def check_status_id(status_id):
 
 
 def delete_status(status_id):
-    data_manager.execute_statement(
-        """
-        DELETE from statuses
-        WHERE id = %(status)s
-        """,
-        {"status": status_id}, select=False)
+    if int(status_id) > 4:
+        data_manager.execute_statement(
+            """
+            DELETE from statuses
+            WHERE id = %(status)s
+            """,
+            {"status": status_id}, select=False)
 
 
 def delete_column(board_id, status_id):
@@ -307,6 +323,17 @@ def update_card_status(card_id, status_id, board_id):
         {"status": status_id, "card": card_id, "board": board_id}, select=False)
 
 
+
+def modify_archive(card_id, archive):
+    data_manager.execute_statement(
+        """
+        UPDATE cards
+        SET archived = %(archive)s
+        WHERE id = %(card)s
+        """,
+        {"archive": archive, "card": card_id}, select=False)
+
+    
 def update_card_title(card_id, updated_title):
     query = '''
             UPDATE cards
@@ -314,3 +341,4 @@ def update_card_title(card_id, updated_title):
             WHERE id = %(card_id)s
             '''
     return data_manager.execute_statement(query, {'updated_title': updated_title, 'card_id': card_id}, select=False)
+

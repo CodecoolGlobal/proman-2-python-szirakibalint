@@ -37,6 +37,12 @@ export let boardsManager = {
 async function archiveBoard() {
     const archivedBoard = await dataHandler.getBoard(0)
     await loadArchiveBoard(archivedBoard)
+    closeModal(archivedBoard)
+}
+
+
+function closeModal() {
+    domManager.addEventListener(`.close-modal[data-board-id="0"]`, reset())
 }
 
 

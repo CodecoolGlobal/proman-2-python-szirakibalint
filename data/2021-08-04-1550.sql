@@ -219,7 +219,7 @@ INSERT INTO public.boards VALUES (8, 'publicboard', 3);
 INSERT INTO public.boards VALUES (9, 'public??', 3);
 INSERT INTO public.boards VALUES (10, 'public pls', 3);
 INSERT INTO public.boards VALUES (11, 'public? finally?', NULL);
-
+INSERT INTO public.boards VALUES (0, 'Archive', NULL);
 
 --
 -- Data for Name: boards_statuses; Type: TABLE DATA; Schema: public; Owner: -
@@ -264,6 +264,7 @@ INSERT INTO public.boards_statuses VALUES (11, 1);
 INSERT INTO public.boards_statuses VALUES (11, 2);
 INSERT INTO public.boards_statuses VALUES (11, 3);
 INSERT INTO public.boards_statuses VALUES (11, 4);
+INSERT INTO public.boards_statuses VALUES (0, 0);
 
 
 --
@@ -288,7 +289,7 @@ INSERT INTO public.cards VALUES (18, 2, 2, 'asdasdsada', 2, false);
 --
 -- Data for Name: statuses; Type: TABLE DATA; Schema: public; Owner: -
 --
-
+INSERT INTO public.statuses VALUES (0, 'archived');
 INSERT INTO public.statuses VALUES (1, 'new');
 INSERT INTO public.statuses VALUES (2, 'in progress');
 INSERT INTO public.statuses VALUES (3, 'testing');

@@ -13,8 +13,8 @@ export let columnsManager = {
             const content = columnBuilder(column, boardId);
             domManager.addChild(`.board[data-board-id="${boardId}"] .board-columns`, content);
             if (boardId !== 0) {
-                domManager.addEventListener(`#change-column-title-button-${boardId}-${column.id}`, "click", renameColumn)
                 domManager.addEventListener(`#delete-column-button-${boardId}-${column.id}`, "click", deleteColumn)
+                domManager.addEventListener(`#board-column-title-${boardId}-${column.id}`, "keydown", renameColumn)
             }
         }
     }

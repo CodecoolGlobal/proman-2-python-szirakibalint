@@ -51,11 +51,11 @@ async function loadArchiveBoard(archiveBoard){
     domManager.addChild(".board-container", content)
     domManager.addEventListener(`.board-toggle[data-board-id="${archiveBoard.id}"]`, "click", showHideButtonHandler)
     domManager.addEventListener(`.close-modal[data-board-id="${archiveBoard.id}"]`, "click", closeModal)
-    const isOpen = JSON.parse(localStorage.getItem("isOpen"));
-    if (isOpen[archiveBoard.id]){
-        const button = document.querySelector(`.board-toggle[data-board-id="${archiveBoard.id}"]`)
-        await openBoard(archiveBoard.id, button);
-    }
+    // const isOpen = JSON.parse(localStorage.getItem("isOpen"));
+    // if (isOpen[archiveBoard.id]){
+    //     const button = document.querySelector(`.board-toggle[data-board-id="${archiveBoard.id}"]`)
+    //     await openBoard(archiveBoard.id, button);
+    // }
 }
 
 

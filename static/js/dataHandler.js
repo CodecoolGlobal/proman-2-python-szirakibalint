@@ -52,18 +52,17 @@ export let dataHandler = {
         const payload = {"title": cardTitle, "board_id":boardId, "status_id":statusId}
         await apiPost('/cards', payload)
     },
-
     deleteCard: async function (cardId) {
         await apiDelete(`cards/${cardId}`);
-    },
-    updateCard: async function (cardId, statusId, boardId) {
-        const payload = {"status_id": statusId, "board_id": boardId}
-        await apiPut(`cards/${cardId}`, payload)
     },
     modifyArchive: async function(cardId, archived) {
         const payload = {"archive": !archived}
         await apiPut(`cards/archive/${cardId}`, payload)
-    }
+    },
+    updateCard: async function (cardId, statusId, boardId, updatedTitle=null) {
+        const payload = updatedTitle ? {"status_id": statusId, "board_id": boardId, "updated_title": updatedTitle} : {"status_id": statusId, "board_id": boardId};
+        await apiPut(`cards/${cardId}`, payload);
+    },
 };
 
 async function apiGet(url) {

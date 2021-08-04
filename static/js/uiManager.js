@@ -18,7 +18,6 @@ export function initNewBoardButton () {
         domManager.addEventListener('#submit-new-board-title', 'click', async () => {
             const boardTitle = document.querySelector('#new-board-title').value
             const privateBoard = document.querySelector('#private-checkbox').checked
-            console.log("checkbox value:", privateBoard)
             await dataHandler.createNewBoard(boardTitle, privateBoard)
             await updateIsOpen();
             await reset()
@@ -47,16 +46,6 @@ export function initAddNewColumnButton(boardId) {
     })
 }
 
-export function initRenameColumnButton(boardId, columnId) {
-    const buttonSpan = document.querySelector(`#change-column-title-${boardId}-${columnId}`)
-    buttonSpan.innerHTML = htmlFactory.newColumnInput(boardId, columnId)
-    domManager.addEventListener(`#submit-new-column-title-${boardId}-${columnId}`,'click', async () => {
-        const newColumnTitle = document.querySelector(`#new-column-title-${boardId}-${columnId}`).value
-        await dataHandler.changeColumnTitle(boardId, columnId, newColumnTitle)
-        await reset()
-    })
-}
-
 export async function initDeleteColumnButton(boardId, columnId) {
     dataHandler.deleteColumn(boardId, columnId).then()
     await reset()
@@ -74,9 +63,7 @@ export function initCardForm (boardId) {
     {
         const newCardTitle = document.querySelector(`#new-card-title-${boardId}`).value
         const firstColumn = document.querySelector(`.board[data-board-id="${boardId}"] .board-column`)
-        console.log(firstColumn)
         let statusId = firstColumn.dataset.columnId;
-        console.log(statusId);
         await dataHandler.createNewCard(newCardTitle, boardId, statusId)
         await reset()
 } );

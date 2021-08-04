@@ -2,6 +2,8 @@ import { boardsManager } from "./boardsManager.js";
 import * as uiManager from "./uiManager.js"
 import {initDragAndDrop} from "./dragAndDrop.js"
 import {dataHandler} from "./dataHandler.js"
+import {cardsManager} from "./cardsManager.js";
+
 
 
 export async function updateIsOpen() {
@@ -17,6 +19,7 @@ async function init() {
   uiManager.initNewBoardDiv()
   uiManager.initNewBoardButton()
   await boardsManager.loadBoards()
+  await cardsManager.initCardRenameFunctions()
   initDragAndDrop()
 }
 

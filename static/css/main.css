@@ -112,11 +112,12 @@ section.board {
     min-height: 2rem;
 }
 
-.delete-column {
+.delete-column-button {
     width: max-content;
     height: max-content;
     display: flex;
     margin-left: auto;
+    color: #6F52FE;
 }
 
 .card {

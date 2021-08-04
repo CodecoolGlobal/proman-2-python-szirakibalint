@@ -37,12 +37,11 @@ export let boardsManager = {
 async function archiveBoard() {
     const archivedBoard = await dataHandler.getBoard(0)
     await loadArchiveBoard(archivedBoard)
-    closeModal(archivedBoard)
 }
 
 
-function closeModal() {
-    domManager.addEventListener(`.close-modal[data-board-id="0"]`, reset())
+function closeModal(clickEvent) {
+    reset()
 }
 
 
@@ -51,6 +50,7 @@ async function loadArchiveBoard(archiveBoard){
     const content = boardBuilder(archiveBoard)
     domManager.addChild(".board-container", content)
     domManager.addEventListener(`.board-toggle[data-board-id="${archiveBoard.id}"]`, "click", showHideButtonHandler)
+    domManager.addEventListener(`.close-modal[data-board-id="${archiveBoard.id}"]`, "click", closeModal)
     const isOpen = JSON.parse(localStorage.getItem("isOpen"));
     if (isOpen[archiveBoard.id]){
         const button = document.querySelector(`.board-toggle[data-board-id="${archiveBoard.id}"]`)

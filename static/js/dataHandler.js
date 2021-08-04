@@ -4,12 +4,11 @@ export let dataHandler = {
         return response
     },
     getBoard: async function(boardId) {
-        // the board is retrieved and then the callback function is called with the board
+        let response = await apiGet(`/get-board/${boardId}`)
+        return response
     },
     getStatuses: async function (boardId) {
         let response = await apiGet(`/get-statuses/${boardId}`)
-
-        
         return response
     },
     getStatus: async function (statusId) {
@@ -17,6 +16,10 @@ export let dataHandler = {
     },
     getCardsByBoardId: async function (boardId) {
         let response = await apiGet(`/get-cards/${boardId}`)
+        return response
+    },
+    getArchivedCards: async function () {
+        let response = await apiGet(`/get-archived-cards`)
         return response
     },
     getCard: async function (cardId) {
@@ -52,10 +55,14 @@ export let dataHandler = {
     deleteCard: async function (cardId) {
         await apiDelete(`cards/${cardId}`);
     },
+    modifyArchive: async function(cardId, archived) {
+        const payload = {"archive": !archived}
+        await apiPut(`cards/archive/${cardId}`, payload)
+    },
     updateCard: async function (cardId, statusId, boardId, updatedTitle=null) {
-        const payload = updatedTitle ? {"status_id": statusId, "board_id": boardId, "updated_title": updatedTitle} : {"status_id": statusId, "board_id": boardId}
-        await apiPut(`cards/${cardId}`, payload)
-    }
+        const payload = updatedTitle ? {"status_id": statusId, "board_id": boardId, "updated_title": updatedTitle} : {"status_id": statusId, "board_id": boardId};
+        await apiPut(`cards/${cardId}`, payload);
+    },
 };
 
 async function apiGet(url) {

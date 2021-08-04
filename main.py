@@ -79,7 +79,14 @@ def delete_column(board_id, status_id):
 @json_response
 def get_boards():
     user_id = session.get("id", None)
+    print(queries.get_boards(user_id))
     return queries.get_boards(user_id)
+
+
+@app.route("/get-board/<board_id>")
+@json_response
+def get_specific_board(board_id):
+    return queries.get_board_by_id(board_id)
 
 
 @app.route("/get-cards/<int:board_id>")
@@ -90,6 +97,12 @@ def get_cards_for_board(board_id: int):
     :param board_id: id of the parent board
     """
     return queries.get_cards_for_board(board_id)
+
+
+@app.route("/get-archived-cards")
+@json_response
+def get_archived_cards():
+    return queries.get_archived_cards()
 
 
 @app.route("/get-statuses/<int:board_id>")
@@ -152,6 +165,14 @@ def update_card(card_id):
         status_id = request_json["status_id"]
         board_id = request_json["board_id"]
         queries.update_card_status(card_id, status_id, board_id)
+    return "ok"
+
+
+@app.route('/cards/archive/<card_id>', methods=['PUT'])
+def modify_archive(card_id):
+    archive = request.get_json()["archive"]
+    print(archive)
+    queries.modify_archive(card_id, archive)
     return "ok"
 
 

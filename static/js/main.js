@@ -5,6 +5,7 @@ import {dataHandler} from "./dataHandler.js"
 import {cardsManager} from "./cardsManager.js";
 
 
+
 export async function updateIsOpen() {
   const boards = await dataHandler.getBoards();
   const boardIds = boards.map(board => board.id);

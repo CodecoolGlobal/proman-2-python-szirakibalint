@@ -5,21 +5,39 @@ export function initDragAndDrop() {
     document.addEventListener("dragstart", function (event) {
         dragged = event.target;
     }, false);
-
-    document.addEventListener("drop", async function (event) {
-        event.preventDefault();
-        if (event.target.getAttribute("class") === "board-column-content" && event.target.getAttribute("data-board-id") === dragged.parentNode.getAttribute("data-board-id")) {
-            const cardId = parseInt(dragged.getAttribute("data-card-id"))
-            const statusId = parseInt(event.target.getAttribute("data-column-id"))
-            const boardId = parseInt(event.target.getAttribute("data-board-id"))
-            await dataHandler.updateCard(cardId, statusId, boardId)
-            dragged.parentNode.removeChild(dragged);
-            event.target.appendChild(dragged);
-        }
-        dragged = "";
+    const dropZones = document.querySelectorAll(".board-column-content, .card")
+    for (const dropZone of dropZones) {
+        dropZone.addEventListener("drop", async function (event) {
+            event.preventDefault();
+            if (event.currentTarget.classList.contains(".board-column-content")
+                && event.currentTarget.dataset.boardId === dragged.parentNode.dataset.boardId)
+            {
+                const cardId = parseInt(dragged.dataset.cardId)
+                const statusId = parseInt(event.currentTarget.dataset.columnId)
+                const boardId = parseInt(event.currentTarget.dataset.boardId)
+                await dataHandler.updateCard(cardId, statusId, boardId)
+            } else if (event.currentTarget.classList.contains("card")
+                && event.currentTarget.parentNode.dataset.boardId === dragged.parentNode.dataset.boardId)
+            {
+                const cardId = parseInt(dragged.dataset.cardId)
+                const statusId = parseInt(event.currentTarget.parentNode.dataset.columnId)
+                const boardId = parseInt(event.currentTarget.parentNode.dataset.boardId)
+                await dataHandler.updateCard(cardId, statusId, boardId)
+            }
+            dragged = "";
         }, false);
-
-        document.addEventListener("dragover", function (event) {
+        dropZone.addEventListener("dragover", function (event) {
             event.preventDefault();
         }, false);
+
+        dropZone.addEventListener("dragenter", function (event) {
+            event.preventDefault();
+            if (event.currentTarget.classList.contains("board-column-content")
+                && event.currentTarget.dataset.boardId === dragged.parentNode.dataset.boardId) {
+                event.currentTarget.appendChild(dragged);
+            }
+        })
+    }
+
+
 }

@@ -79,6 +79,7 @@ def delete_column(board_id, status_id):
 @json_response
 def get_boards():
     user_id = session.get("id", None)
+    print(queries.get_boards(user_id))
     return queries.get_boards(user_id)
 
 

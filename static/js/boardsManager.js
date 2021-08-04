@@ -4,6 +4,7 @@ import { domManager } from "./domManager.js";
 import { cardsManager } from "./cardsManager.js";
 import {columnsManager} from "./columnsManager.js";
 import * as uiManager from "./uiManager.js";
+import {reset} from "./main.js";
 
 
 export let boardsManager = {
@@ -22,16 +23,22 @@ export let boardsManager = {
             domManager.addEventListener(`.add-new-column[data-board-id="${board.id}"]`, "click", addNewColumn)
             domManager.addEventListener(`.delete-board[data-board-id="${board.id}"]`, "click", deleteBoard)
             domManager.addEventListener(`.board-add[data-board-id="${board.id}"]`, "click", addCard)
+            domManager.addEventListener(`.show-archived[data-board-id="${board.id}"]`, "click", archiveBoard)
             const isOpen = JSON.parse(localStorage.getItem("isOpen"));
             if (isOpen[board.id]){
                 const button = document.querySelector(`.board-toggle[data-board-id="${board.id}"]`)
                 await openBoard(board.id, button);
             }
         }
-        const archiveBoard = await dataHandler.getBoard(0)
-        await loadArchiveBoard(archiveBoard)
-    },
+    }
 }
+
+
+async function archiveBoard() {
+    const archivedBoard = await dataHandler.getBoard(0)
+    await loadArchiveBoard(archivedBoard)
+}
+
 
 async function loadArchiveBoard(archiveBoard){
     const boardBuilder = htmlFactory(htmlTemplates.board);
@@ -44,6 +51,10 @@ async function loadArchiveBoard(archiveBoard){
         await openBoard(archiveBoard.id, button);
     }
 }
+
+
+
+
 
 async function openBoard(boardId, button){
     await columnsManager.loadColumns(boardId);

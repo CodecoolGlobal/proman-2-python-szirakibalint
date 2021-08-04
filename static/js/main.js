@@ -3,6 +3,7 @@ import * as uiManager from "./uiManager.js"
 import {initDragAndDrop} from "./dragAndDrop.js"
 import {dataHandler} from "./dataHandler.js"
 
+
 export async function updateIsOpen() {
   const boards = await dataHandler.getBoards();
   const boardIds = boards.map(board => board.id);

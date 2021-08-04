@@ -30,19 +30,26 @@ function boardBuilder(board) {
                     <span id="add-new-column-${board.id}"><button class="add-new-column" data-board-id=${board.id}>Add new column</button></span>
                     <span id="delete-board-${board.id}"><button class="delete-board" data-board-id=${board.id}>Delete board</button></span>
                     <span id="add-new-card-${board.id}"><button class="board-add" data-board-id=${board.id}>Add card</button></span>
+                    <span id="show-archived-${board.id}"><button class="show-archived" data-board-id=${board.id}>Archived boards</button></span>
                     <button class="board-toggle" data-toggle-state="hide" data-board-id="${board.id}">Show Cards <i class="fas fa-chevron-down"></i></button>
                 </div>
                 <div class="board-columns"></div>
             </section>`
-    } else {
-        console.log(board)
-        return `<section class="board" data-board-id=${board.id}>
+    }
+    else {
+        return `
+            <div class="modal" id="modal">
+            <div class="modal-content">
+            <section class="board" data-board-id=${board.id}>
                 <div class="board-header">
                     <span class="board-title" >${board.title}</span>
-                    <button class="board-toggle" data-toggle-state="hide" data-board-id="${board.id}">Show Cards <i class="fas fa-chevron-down"></i></button>
+                    <span id="close-modal-${board.id}"><button class="close-modal" data-board-id=${board.id}>Close</button></span>
+                    <button class="board-toggle" data-toggle-state="hide" data-board-id="${board.id}">Show Cards<i class="fas fa-chevron-down"></i></button>
                 </div>
                 <div class="board-columns"></div>
-            </section>`
+            </section>
+            </div>
+            </div>`
     }
 }
 
@@ -64,6 +71,7 @@ function columnBuilder(column, boardId) {
              </div>`;
     }
 }
+
 
 function cardBuilder(card) {
     return `<div class="card" data-card-id="${card.id}" draggable="true">
